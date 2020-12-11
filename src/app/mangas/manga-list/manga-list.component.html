@@ -1,0 +1,28 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-accordion multi="true" *ngIf="mangas.length > 0 && !isLoading">
+    <mat-expansion-panel *ngFor="let manga of mangas">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{ manga.title }}
+            </mat-panel-title>
+            <mat-panel-description>
+                {{ manga.author }}
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="manga-image">
+            <img [src]="manga.image" [alt]="manga.title">
+        </div>
+        <p>{{ manga.description }}</p>
+        <mat-action-row>
+            <a mat-button color="accent" [routerLink]="['/mangas/edit', manga.id]">EDIT</a>
+            <button mat-button color="warn" (click)="onDelete(manga.id)">DELETE</button>
+        </mat-action-row>
+    </mat-expansion-panel>
+</mat-accordion>
+<mat-paginator  *ngIf="mangas.length > 0"
+                [length]="length"
+                [pageSize]="pageSize"
+                [pageSizeOptions]="pageSizeOptions"
+                (page)="onChangedPage($event)">
+</mat-paginator>
+<p class="info-text mat-body-1" *ngIf="mangas.length === 0  && !isLoading">No mangas added yet</p>
