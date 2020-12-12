@@ -13,7 +13,7 @@
             <img [src]="manga.image" [alt]="manga.title">
         </div>
         <p>{{ manga.description }}</p>
-        <mat-action-row>
+        <mat-action-row *ngIf="authenticated">
             <a mat-button color="accent" [routerLink]="['/mangas/edit', manga.id]">EDIT</a>
             <button mat-button color="warn" (click)="onDelete(manga.id)">DELETE</button>
         </mat-action-row>

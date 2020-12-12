@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit} from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 
 import { Manga } from '../manga.model'
 import { MangasService } from '../mangas.service';
@@ -12,6 +13,9 @@ import { MangasService } from '../mangas.service';
 })
 export class MangaListComponent implements OnInit, OnDestroy {
 
+  authenticated = false;
+  private authListenerSub!: Subscription;
+
   mangas: Manga[] = [];
   private mangasSub: Subscription = new Subscription;
 
@@ -19,14 +23,15 @@ export class MangaListComponent implements OnInit, OnDestroy {
 
   // pagination attributes
   length = 0;
-  pageSize = 2;
+  pageSize = 10;
   pageSizeOptions = [1, 2, 5, 10];
   currentPage = 1;
 
-  constructor(public mangasService: MangasService) { }
+  constructor(public mangasService: MangasService, private authService: AuthService) { }
 
   ngOnDestroy(): void {
     this.mangasSub.unsubscribe();
+    this.authListenerSub.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -37,6 +42,11 @@ export class MangaListComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         this.mangas = mangaData.mangas;
         this.length = mangaData.mangaCount;
+      });
+    this.authenticated = this.authService.getIsAuth();
+    this.authListenerSub = this.authService.getAuthStatusListener()
+      .subscribe(isAuthenticated => {
+        this.authenticated = isAuthenticated;
       });
   }
 

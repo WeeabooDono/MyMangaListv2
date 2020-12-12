@@ -1,0 +1,59 @@
+<mat-card>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <form (submit)= "onSignup(form)" #form="ngForm" *ngIf="!isLoading">
+        <mat-form-field appearance="fill">
+            <mat-label>Enter username:</mat-label>
+            <input  
+                matInput 
+                ngModel
+                #username="ngModel"
+                name="username"
+                type="text"
+                required>
+            <mat-error *ngIf="username.invalid">Please enter a valid username</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>Enter email:</mat-label>
+            <input  
+                matInput 
+                ngModel
+                #email="ngModel"
+                name="email"
+                type="email"
+                required
+                email>
+            <mat-error *ngIf="email.invalid">Please enter a valid email</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>Enter password:</mat-label>
+            <input  
+                matInput 
+                ngModel
+                #password="ngModel"
+                name="password"
+                type="password"
+                required>
+            <mat-error *ngIf="password.invalid">Please enter the password</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>Confirm password:</mat-label>
+            <input  
+                matInput 
+                ngModel
+                #password2="ngModel"
+                name="password2"
+                type="password"
+                required>
+            <mat-error *ngIf="password2.invalid">Please enter the password</mat-error>
+        </mat-form-field>
+        <br>
+        <button 
+            *ngIf="!isLoading"
+            mat-raised-button 
+            color="accent"
+            type="submit">Signup</button>
+    </form> 
+</mat-card>

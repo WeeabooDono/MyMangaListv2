@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // Material components
 import { MatInputModule } from '@angular/material/input';
@@ -22,6 +22,9 @@ import { MangaCreateComponent } from './mangas/manga-create/manga-create.compone
 import { HeaderComponent } from './header/header.component';
 import { MangaListComponent } from './mangas/manga-list/manga-list.component';
 import { MangaEditComponent } from './mangas/manga-edit/manga-edit.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { AuthInterceptor } from './auth/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -29,12 +32,15 @@ import { MangaEditComponent } from './mangas/manga-edit/manga-edit.component';
     MangaCreateComponent,
     HeaderComponent,
     MangaListComponent,
-    MangaEditComponent
+    MangaEditComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     BrowserAnimationsModule,
     MatInputModule,
     MatCardModule,
@@ -46,7 +52,12 @@ import { MangaEditComponent } from './mangas/manga-edit/manga-edit.component';
     MatProgressSpinnerModule,
     MatPaginatorModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, 
+      useClass: AuthInterceptor, 
+      multi: true 
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

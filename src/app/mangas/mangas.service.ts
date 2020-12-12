@@ -64,7 +64,8 @@ export class MangasService {
         this.http
             .post<{ message: string, manga: Manga }>('http://localhost:9000/api/mangas', mangaData)
             .subscribe((response) => {
-                this.router.navigate(["/mangas"]);
+                console.log(response);
+                this.router.navigate(["/"]);
             })    
     }
 
@@ -85,7 +86,7 @@ export class MangasService {
         this.http
             .patch<{ message: string, manga: Manga }>('http://localhost:9000/api/mangas/' + manga.id, mangaData)
             .subscribe((response) => {
-                this.router.navigate(["/mangas"]);
+                this.router.navigate(["/"]);
             })    
     }
 }
