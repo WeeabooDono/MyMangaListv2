@@ -14,6 +14,7 @@ import { MangasService } from '../mangas.service';
 export class MangaListComponent implements OnInit, OnDestroy {
 
   authenticated = false;
+  id!:string;
   private authListenerSub!: Subscription;
 
   mangas: Manga[] = [];
@@ -37,6 +38,7 @@ export class MangaListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isLoading = true;
     this.mangas = this.mangasService.getMangas(this.currentPage, this.pageSize);
+    this.id = this.authService.getUserId();
     this.mangasSub = this.mangasService.getMangasUpdateListener()
       .subscribe((mangaData: { mangas: Manga[], mangaCount: number }) => {
         this.isLoading = false;
@@ -47,6 +49,7 @@ export class MangaListComponent implements OnInit, OnDestroy {
     this.authListenerSub = this.authService.getAuthStatusListener()
       .subscribe(isAuthenticated => {
         this.authenticated = isAuthenticated;
+        this.id = this.authService.getUserId();
       });
   }
 
@@ -63,5 +66,9 @@ export class MangaListComponent implements OnInit, OnDestroy {
       // to update data since we update datas when we get mangas
       this.mangasService.getMangas(this.currentPage, this.pageSize);
     });
+  }
+
+  onBookmark(id: string): void {
+    this.mangasService.bookmarkManga(id);
   }
 }

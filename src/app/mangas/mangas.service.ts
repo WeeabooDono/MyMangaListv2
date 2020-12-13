@@ -89,4 +89,12 @@ export class MangasService {
                 this.router.navigate(["/"]);
             })    
     }
+
+    bookmarkManga(id: string){
+        this.http
+            .post('http://localhost:9000/api/mangas/bookmark', { id })
+            .subscribe((response) => {
+                console.log(response);
+            })
+    }
 }

@@ -12,7 +12,13 @@
         <div class="manga-image">
             <img [src]="manga.image" [alt]="manga.title">
         </div>
-        <p>{{ manga.description }}</p>
+        <div class="manga-description">
+            {{ manga.description }}
+        </div>
+        <div class="manga-bookmark" *ngIf="authenticated">
+            {{ id }}
+            <button mat-button color="accent" (click)="onBookmark(manga.id)">BOOKMARK</button>
+        </div>
         <mat-action-row *ngIf="authenticated">
             <a mat-button color="accent" [routerLink]="['/mangas/edit', manga.id]">EDIT</a>
             <button mat-button color="warn" (click)="onDelete(manga.id)">DELETE</button>
@@ -20,6 +26,7 @@
     </mat-expansion-panel>
 </mat-accordion>
 <mat-paginator  *ngIf="mangas.length > 0"
+                fixed
                 [length]="length"
                 [pageSize]="pageSize"
                 [pageSizeOptions]="pageSizeOptions"
