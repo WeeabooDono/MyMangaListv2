@@ -26,6 +26,7 @@ export class AuthService {
     getUserId() {
         return this.id;
     }
+    
 
     getAuthStatusListener() {
         return this.authStatusListener.asObservable();
@@ -34,8 +35,10 @@ export class AuthService {
     createUser(authData: AuthData){
         this.http.post<{ message: string, user: any}>('http://localhost:9000/api/auth/signup', authData)
             .subscribe(response => {
-                console.log(response)
-            })
+                this.router.navigate(['/']);
+            }, error => {
+                this.authStatusListener.next(false);
+            });
     }
 
     login(email: string, password: string){
@@ -55,6 +58,8 @@ export class AuthService {
                     this.saveAuthData(token, expirationDate, this.id);
                     this.router.navigate(['/']);
                 }
+            }, error => {
+                this.authStatusListener.next(false);
             })
     }
 

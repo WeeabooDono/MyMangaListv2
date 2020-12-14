@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 
 import { Manga } from '../manga.model'
 import { MangasService } from '../mangas.service';
@@ -19,8 +21,9 @@ export class MangaEditComponent implements OnInit {
   isLoading = false;
 
   private id!: string;
+  private authStatusSub!: Subscription;
 
-  constructor(public mangasService: MangasService, public route: ActivatedRoute) { }
+  constructor(public mangasService: MangasService, public route: ActivatedRoute, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -41,15 +44,9 @@ export class MangaEditComponent implements OnInit {
       if(paramMap.has('id')){
         this.id = paramMap.get('id') as string;
         this.isLoading = true;
-        this.mangasService.getManga(this.id).subscribe(manga => {
+        this.mangasService.getManga(this.id).subscribe(data => {
           this.isLoading = false;
-          this.manga = {
-            id: manga._id,
-            title: manga.title,
-            description: manga.description,
-            author: manga.author,
-            image: manga.image,
-          }
+          this.manga = data.manga;
           // set values
           this.form.setValue({
             title: this.manga.title,
@@ -57,9 +54,16 @@ export class MangaEditComponent implements OnInit {
             description: this.manga.description,
             image: this.manga.image,
           });
+          
+          console.log('pass')
         });
       }
     })
+    this.authStatusSub = this.authService.getAuthStatusListener().subscribe(
+      authStatus => {
+        this.isLoading = false;
+      }
+    );
   }
 
   onEditManga(): void {
@@ -89,5 +93,9 @@ export class MangaEditComponent implements OnInit {
       this.imagePreview = reader!.result as string;
     }
     reader.readAsDataURL(file);
+  }
+
+  ngOnDestroy(): void {
+    this.authStatusSub.unsubscribe();
   }
 }

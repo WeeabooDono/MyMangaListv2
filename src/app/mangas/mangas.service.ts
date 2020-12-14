@@ -21,26 +21,6 @@ export class MangasService {
         const queryParams = `?page=${page}&pagesize=${pagesize}`;
         this.http
             .get<{message: string, mangas: any, count: number}>('http://localhost:9000/api/mangas' + queryParams)
-            .pipe(map((data) => {
-                return { 
-                    mangas: data.mangas.map( (manga: { 
-                        title: string; 
-                        description: string; 
-                        author: string; 
-                        image: string;
-                        _id: string; 
-                        }) => {
-                            return {
-                                title: manga.title,
-                                description: manga.description,
-                                author: manga.author,
-                                image: manga.image,
-                                id: manga._id
-                            }
-                        }),
-                    count: data.count
-                }
-            }))
             .subscribe((data) => {
                 this.mangas = data.mangas;
                 this.mangasUpdated.next({ 
@@ -52,7 +32,7 @@ export class MangasService {
     }
 
     getManga(id: string) {
-        return this.http.get<{ _id: string, title: string, description: string, author: string, image: string }>('http://localhost:9000/api/mangas/' + id);
+        return this.http.get<{ manga: Manga, message: string }>('http://localhost:9000/api/mangas/' + id);
     }
 
     addManga(manga: Manga){
@@ -64,7 +44,6 @@ export class MangasService {
         this.http
             .post<{ message: string, manga: Manga }>('http://localhost:9000/api/mangas', mangaData)
             .subscribe((response) => {
-                console.log(response);
                 this.router.navigate(["/"]);
             })    
     }
@@ -91,10 +70,10 @@ export class MangasService {
     }
 
     bookmarkManga(id: string){
-        this.http
-            .post('http://localhost:9000/api/mangas/bookmark', { id })
-            .subscribe((response) => {
-                console.log(response);
-            })
+        return this.http.post('http://localhost:9000/api/mangas/bookmark', { id });
+    }
+
+    unbookmarkManga(id: string){
+        return this.http.post('http://localhost:9000/api/mangas/unbookmark', { id });
     }
 }

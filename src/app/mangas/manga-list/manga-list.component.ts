@@ -2,6 +2,9 @@ import { Component, OnDestroy, OnInit} from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { Bookmark } from 'src/app/users/bookmark.model';
+import { User } from 'src/app/users/user.model';
+import { UsersService } from 'src/app/users/users.service';
 
 import { Manga } from '../manga.model'
 import { MangasService } from '../mangas.service';
@@ -24,7 +27,7 @@ export class MangaListComponent implements OnInit, OnDestroy {
 
   // pagination attributes
   length = 0;
-  pageSize = 10;
+  pageSize = 2;
   pageSizeOptions = [1, 2, 5, 10];
   currentPage = 1;
 
@@ -37,17 +40,25 @@ export class MangaListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isLoading = true;
+    // initialisations
     this.mangas = this.mangasService.getMangas(this.currentPage, this.pageSize);
     this.id = this.authService.getUserId();
+
+
+    // subscribe to manga service
     this.mangasSub = this.mangasService.getMangasUpdateListener()
       .subscribe((mangaData: { mangas: Manga[], mangaCount: number }) => {
         this.isLoading = false;
         this.mangas = mangaData.mangas;
         this.length = mangaData.mangaCount;
       });
+      
+
     this.authenticated = this.authService.getIsAuth();
+    // subscribe to auth service
     this.authListenerSub = this.authService.getAuthStatusListener()
       .subscribe(isAuthenticated => {
+        this.isLoading = false;
         this.authenticated = isAuthenticated;
         this.id = this.authService.getUserId();
       });
@@ -65,10 +76,24 @@ export class MangaListComponent implements OnInit, OnDestroy {
     this.mangasService.deleteManga(id).subscribe(() => {
       // to update data since we update datas when we get mangas
       this.mangasService.getMangas(this.currentPage, this.pageSize);
+    }, () => {
+      this.isLoading = false;
     });
   }
 
   onBookmark(id: string): void {
-    this.mangasService.bookmarkManga(id);
+    this.mangasService.bookmarkManga(id).subscribe(() => {
+      this.mangasService.getMangas(this.currentPage, this.pageSize);
+    });
+  }
+
+  onUnbookmark(id: string): void {
+    this.mangasService.unbookmarkManga(id).subscribe(() => {
+      this.mangasService.getMangas(this.currentPage, this.pageSize);
+    });
+  }
+
+  isBookmarked(manga: Manga){
+    return false;
   }
 }

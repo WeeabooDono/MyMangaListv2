@@ -1,5 +1,7 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 
 import { Manga } from '../manga.model'
 import { MangasService } from '../mangas.service';
@@ -10,14 +12,16 @@ import { mimeType } from './mime-type.validator';
   templateUrl: './manga-create.component.html',
   styleUrls: ['./manga-create.component.css']
 })
-export class MangaCreateComponent implements OnInit {
+export class MangaCreateComponent implements OnInit, OnDestroy {
 
   isLoading = false;
 
   form!: FormGroup;
   imagePreview: string = '';
 
-  constructor(public mangasService: MangasService) { }
+  private authStatusSub!: Subscription;
+
+  constructor(public mangasService: MangasService, private authService: AuthService) { }
 
   ngOnInit(): void { 
     this.form = new FormGroup({
@@ -34,6 +38,11 @@ export class MangaCreateComponent implements OnInit {
         validators: [Validators.required], asyncValidators: [mimeType]
       })
     })
+    this.authStatusSub = this.authService.getAuthStatusListener().subscribe(
+      authStatus => {
+        this.isLoading = false;
+      }
+    );
   }
 
   onAddManga(): void {
@@ -45,7 +54,7 @@ export class MangaCreateComponent implements OnInit {
       title: this.form.value.title,           
       description: this.form.value.description,
       author: this.form.value.author,
-      image: this.form.value.image
+      image: this.form.value.image,
     } 
 
     this.mangasService.addManga(manga);
@@ -64,5 +73,9 @@ export class MangaCreateComponent implements OnInit {
       this.imagePreview = reader!.result as string;
     }
     reader.readAsDataURL(file);
+  }
+
+  ngOnDestroy(): void {
+    this.authStatusSub.unsubscribe();
   }
 }
