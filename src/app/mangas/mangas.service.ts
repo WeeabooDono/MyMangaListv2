@@ -2,9 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { map } from 'rxjs/operators'
 import { Manga } from './manga.model';
+import { environment } from '../../environments/environment';
 
+const BACKEND_URL = `${environment.apiUrl}/mangas`;
 @Injectable({providedIn: 'root'})
 export class MangasService {
     
@@ -20,7 +21,7 @@ export class MangasService {
     getMangas(page: number, pagesize: number) {
         const queryParams = `?page=${page}&pagesize=${pagesize}`;
         this.http
-            .get<{message: string, mangas: any, count: number}>('http://localhost:9000/api/mangas' + queryParams)
+            .get<{message: string, mangas: any, count: number}>(`${BACKEND_URL}/${queryParams}`)
             .subscribe((data) => {
                 this.mangas = data.mangas;
                 this.mangasUpdated.next({ 
@@ -32,7 +33,7 @@ export class MangasService {
     }
 
     getManga(id: string) {
-        return this.http.get<{ manga: Manga, message: string }>('http://localhost:9000/api/mangas/' + id);
+        return this.http.get<{ manga: Manga, message: string }>(`${BACKEND_URL}/${id}`);
     }
 
     addManga(manga: Manga){
@@ -42,14 +43,14 @@ export class MangasService {
         mangaData.append('description', manga.description);
         mangaData.append('image', manga.image, manga.title);
         this.http
-            .post<{ message: string, manga: Manga }>('http://localhost:9000/api/mangas', mangaData)
+            .post<{ message: string, manga: Manga }>(`${BACKEND_URL}/`, mangaData)
             .subscribe((response) => {
                 this.router.navigate(["/"]);
             })    
     }
 
     deleteManga(id: string) {
-        return this.http.delete<{ message: string }>('http://localhost:9000/api/mangas/' + id);
+        return this.http.delete<{ message: string }>(`${BACKEND_URL}/${id}`);
     }
 
     updateManga(manga: Manga){
@@ -63,17 +64,17 @@ export class MangasService {
         } else mangaData = manga;
 
         this.http
-            .patch<{ message: string, manga: Manga }>('http://localhost:9000/api/mangas/' + manga.id, mangaData)
+            .patch<{ message: string, manga: Manga }>(`${BACKEND_URL}/${manga.id}`, mangaData)
             .subscribe((response) => {
                 this.router.navigate(["/"]);
             })    
     }
 
     bookmarkManga(id: string){
-        return this.http.post('http://localhost:9000/api/mangas/bookmark', { id });
+        return this.http.post(`${BACKEND_URL}/bookmark`, { id });
     }
 
     unbookmarkManga(id: string){
-        return this.http.post('http://localhost:9000/api/mangas/unbookmark', { id });
+        return this.http.post(`${BACKEND_URL}/unbookmark`, { id });
     }
 }
