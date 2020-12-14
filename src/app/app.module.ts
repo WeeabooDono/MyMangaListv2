@@ -17,7 +17,6 @@ import { AngularMaterialModule } from './angular-material.module';
 
 // Custom modules
 import { MangaModule } from './mangas/mangas.module';
-import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +31,6 @@ import { AuthModule } from './auth/auth.module';
     HttpClientModule,
     AngularMaterialModule,
     MangaModule,
-    AuthModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
