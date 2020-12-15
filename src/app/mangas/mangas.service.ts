@@ -32,7 +32,7 @@ export class MangasService {
         return [...this.mangas];
     }
 
-    getManga(id: string) {
+    getManga(id: Number) {
         return this.http.get<{ manga: Manga, message: string }>(`${BACKEND_URL}/${id}`);
     }
 
@@ -49,7 +49,7 @@ export class MangasService {
             })    
     }
 
-    deleteManga(id: string) {
+    deleteManga(id: Number) {
         return this.http.delete<{ message: string }>(`${BACKEND_URL}/${id}`);
     }
 
@@ -70,11 +70,11 @@ export class MangasService {
             })    
     }
 
-    bookmarkManga(id: string){
+    bookmarkManga(id: Number){
         return this.http.post(`${BACKEND_URL}/bookmark`, { id });
     }
 
-    unbookmarkManga(id: string){
+    unbookmarkManga(id: Number){
         return this.http.delete(`${BACKEND_URL}/bookmark/${id}`);
     }
 }

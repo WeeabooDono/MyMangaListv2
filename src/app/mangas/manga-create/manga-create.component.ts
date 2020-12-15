@@ -50,7 +50,7 @@ export class MangaCreateComponent implements OnInit, OnDestroy {
 
     this.isLoading = true;
     const manga: Manga = { 
-      id: 'null',
+      id: 0,
       title: this.form.value.title,           
       description: this.form.value.description,
       author: this.form.value.author,

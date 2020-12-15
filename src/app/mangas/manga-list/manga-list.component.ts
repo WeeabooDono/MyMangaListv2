@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit} from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { Bookmark } from 'src/app/bookmarks/bookmark.model';
+import { BookmarksService } from 'src/app/bookmarks/bookmarks.service';
 
 import { Manga } from '../manga.model'
 import { MangasService } from '../mangas.service';
@@ -20,6 +22,9 @@ export class MangaListComponent implements OnInit, OnDestroy {
   mangas: Manga[] = [];
   private mangasSub: Subscription = new Subscription;
 
+  bookmarks: Bookmark[] = [];
+  private bookmarksSub: Subscription = new Subscription;
+
   isLoading = false;
 
   // pagination attributes
@@ -28,10 +33,11 @@ export class MangaListComponent implements OnInit, OnDestroy {
   pageSizeOptions = [1, 2, 5, 10];
   currentPage = 1;
 
-  constructor(public mangasService: MangasService, private authService: AuthService) { }
+  constructor(public mangasService: MangasService, public bookmarkService: BookmarksService, private authService: AuthService) { }
 
   ngOnDestroy(): void {
     this.mangasSub.unsubscribe();
+    this.bookmarksSub.unsubscribe();
     this.authListenerSub.unsubscribe();
   }
 
@@ -41,14 +47,14 @@ export class MangaListComponent implements OnInit, OnDestroy {
     this.mangas = this.mangasService.getMangas(this.currentPage, this.pageSize);
     this.id = this.authService.getUserId();
 
-
     // subscribe to manga service
     this.mangasSub = this.mangasService.getMangasUpdateListener()
       .subscribe((mangaData: { mangas: Manga[], mangaCount: number }) => {
         this.isLoading = false;
         this.mangas = mangaData.mangas;
         this.length = mangaData.mangaCount;
-      });
+        console.log(this.length)
+    });
       
 
     this.authenticated = this.authService.getIsAuth();
@@ -59,6 +65,16 @@ export class MangaListComponent implements OnInit, OnDestroy {
         this.authenticated = isAuthenticated;
         this.id = this.authService.getUserId();
       });
+
+    // subscribe to bookmarks service
+    if(this.authenticated){
+      this.bookmarks = this.bookmarkService.getbookmarksfromloggedUser();
+      this.bookmarksSub = this.bookmarkService.getBookmarkUpdateListener()
+        .subscribe((bookmarkData : { bookmarks: Bookmark[] }) => {
+          this.isLoading = false;
+          this.bookmarks = bookmarkData.bookmarks;
+      })
+    }
   }
 
   onChangedPage(pageData: PageEvent){
@@ -68,7 +84,7 @@ export class MangaListComponent implements OnInit, OnDestroy {
     this.mangas = this.mangasService.getMangas(this.currentPage, this.pageSize);
   }
 
-  onDelete(id: string): void {
+  onDelete(id: Number): void {
     this.isLoading = true;
     this.mangasService.deleteManga(id).subscribe(() => {
       // to update data since we update datas when we get mangas
@@ -78,19 +94,33 @@ export class MangaListComponent implements OnInit, OnDestroy {
     });
   }
 
-  onBookmark(id: string): void {
+  onBookmark(id: Number): void {
     this.mangasService.bookmarkManga(id).subscribe(() => {
       this.mangasService.getMangas(this.currentPage, this.pageSize);
+      if(this.authenticated){
+        this.bookmarks = this.bookmarkService.getbookmarksfromloggedUser();
+      }
+    }, () => {
+      this.isLoading = false;
     });
   }
 
-  onUnbookmark(id: string): void {
+  onUnbookmark(id: Number): void {
     this.mangasService.unbookmarkManga(id).subscribe(() => {
       this.mangasService.getMangas(this.currentPage, this.pageSize);
+      if(this.authenticated){
+        this.bookmarks = this.bookmarkService.getbookmarksfromloggedUser();
+      }
+    }, () => {
+      this.isLoading = false;
     });
   }
 
   isBookmarked(manga: Manga){
-    return false;
+    let bookmarked = false;
+    this.bookmarks.forEach(bookmark => {
+      if(bookmark.manga_id === manga.id) bookmarked = true;
+    })
+    return bookmarked;
   }
 }

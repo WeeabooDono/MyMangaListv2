@@ -1,5 +1,5 @@
 export interface Manga {
-    id: string;
+    id: Number;
     title: string;
     description: string;
     author: string;

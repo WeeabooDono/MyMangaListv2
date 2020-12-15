@@ -20,7 +20,7 @@ export class MangaEditComponent implements OnInit {
   form!: FormGroup;
   isLoading = false;
 
-  private id!: string;
+  private id!: Number;
   private authStatusSub!: Subscription;
 
   constructor(public mangasService: MangasService, public route: ActivatedRoute, private authService: AuthService) { }
@@ -42,7 +42,7 @@ export class MangaEditComponent implements OnInit {
     })
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if(paramMap.has('id')){
-        this.id = paramMap.get('id') as string;
+        this.id = paramMap.get('id') as unknown as Number;
         this.isLoading = true;
         this.mangasService.getManga(this.id).subscribe(data => {
           this.isLoading = false;
@@ -54,8 +54,6 @@ export class MangaEditComponent implements OnInit {
             description: this.manga.description,
             image: this.manga.image,
           });
-          
-          console.log('pass')
         });
       }
     })
