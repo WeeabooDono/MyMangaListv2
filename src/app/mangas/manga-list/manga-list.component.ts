@@ -2,9 +2,6 @@ import { Component, OnDestroy, OnInit} from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
-import { Bookmark } from 'src/app/users/bookmark.model';
-import { User } from 'src/app/users/user.model';
-import { UsersService } from 'src/app/users/users.service';
 
 import { Manga } from '../manga.model'
 import { MangasService } from '../mangas.service';
