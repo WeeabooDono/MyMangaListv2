@@ -53,7 +53,6 @@ export class MangaListComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         this.mangas = mangaData.mangas;
         this.length = mangaData.mangaCount;
-        console.log(this.length)
     });
       
 

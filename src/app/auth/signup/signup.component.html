@@ -39,7 +39,7 @@
         </mat-form-field>
         <br>
         <mat-form-field appearance="fill">
-            <mat-label>Confirm password:</mat-label>
+            <mat-label>Confirm your password:</mat-label>
             <input  
                 matInput 
                 ngModel
@@ -47,7 +47,7 @@
                 name="password2"
                 type="password"
                 required>
-            <mat-error *ngIf="password2.invalid">Please enter the password</mat-error>
+            <mat-error *ngIf="password2 !== password">Passwords doesn't match</mat-error>
         </mat-form-field>
         <br>
         <button 
