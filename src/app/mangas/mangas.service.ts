@@ -75,6 +75,6 @@ export class MangasService {
     }
 
     unbookmarkManga(id: string){
-        return this.http.post(`${BACKEND_URL}/unbookmark`, { id });
+        return this.http.delete(`${BACKEND_URL}/bookmark/${id}`);
     }
 }

@@ -18,7 +18,7 @@
         <div class="manga-bookmark" *ngIf="authenticated && !isBookmarked(manga)">
             <button mat-button color="accent" (click)="onBookmark(manga.id)">BOOKMARK</button>
         </div>
-        <div class="manga-bookmark" *ngIf="authenticated && isBookmarked(manga)">
+        <div class="manga-bookmark" *ngIf="authenticated && !isBookmarked(manga)">
             <button mat-button color="warn" (click)="onUnbookmark(manga.id)">UNBOOKMARK</button>
         </div>
         <mat-action-row *ngIf="authenticated">
