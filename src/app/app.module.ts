@@ -19,6 +19,7 @@ import { AngularMaterialModule } from './angular-material.module';
 import { MangaModule } from './mangas/mangas.module';
 import { NotFoundComponent } from './notfound/notfound.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
     HeaderComponent,
     ErrorComponent,
     NotFoundComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
