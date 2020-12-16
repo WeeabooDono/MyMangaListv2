@@ -6,7 +6,9 @@ export interface Bookmark {
     title: string;
     author: string;
     image: string;
-    volumesRead: Number;
-    chaptersRead: Number;
+    volumes: Number;
+    volumes_read: Number;
+    chapters: Number;
+    chapters_read: Number;
     score: Number | null;
 }

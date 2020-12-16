@@ -1,8 +1,13 @@
 .manga-image {
-  width: 10%;
+  width: 90%;
 }
 
 .manga-image img {
+  margin: 8px;
   width: 100%;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+.mat-column-Image {
+  width: 15%;
 }

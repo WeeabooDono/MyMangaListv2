@@ -15,14 +15,18 @@
         </mat-form-field>
         <br>
         <mat-form-field appearance="fill">
-            <mat-label>Enter password:</mat-label>
-            <input  
-                matInput 
-                ngModel
-                #password="ngModel"
-                name="password"
-                type="password"
-                required>
+            <mat-label>Enter your password</mat-label>
+                <input 
+                    matInput 
+                    [type]="hide ? 'password' : 'text'"
+                    ngModel
+                    #password="ngModel"
+                    name="password"
+                    type="password"
+                    required>
+                <button type="button" class="hide-password" matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
             <mat-error *ngIf="password.invalid">Please enter the password</mat-error>
         </mat-form-field>
         <br>

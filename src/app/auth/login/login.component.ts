@@ -10,6 +10,7 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
+  hide = true;
   isLoading = false;
   private authStatusSub!: Subscription;
 
