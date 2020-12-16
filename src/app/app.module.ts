@@ -17,12 +17,16 @@ import { AngularMaterialModule } from './angular-material.module';
 
 // Custom modules
 import { MangaModule } from './mangas/mangas.module';
+import { NotFoundComponent } from './notfound/notfound.component';
+import { ForbiddenComponent } from './forbidden/forbidden.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    ErrorComponent
+    ErrorComponent,
+    NotFoundComponent,
+    ForbiddenComponent
   ],
   imports: [
     BrowserModule,
