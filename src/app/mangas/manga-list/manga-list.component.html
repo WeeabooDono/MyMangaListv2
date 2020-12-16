@@ -21,7 +21,7 @@
         <div class="manga-bookmark" *ngIf="authenticated && isBookmarked(manga)">
             <button mat-button color="warn" (click)="onUnbookmark(manga.id)">UNBOOKMARK</button>
         </div>
-        <mat-action-row *ngIf="authenticated">
+        <mat-action-row *ngIf="authenticated && isAdmin">
             <a mat-button color="accent" [routerLink]="['/mangas/edit', manga.id]">EDIT</a>
             <button mat-button color="warn" (click)="onDelete(manga.id)">DELETE</button>
         </mat-action-row>

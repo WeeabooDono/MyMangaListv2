@@ -6,7 +6,7 @@
     <span><a routerLink="/">MyMangaList</a></span>
     <span class="example-spacer"></span>
     <ul>
-      <li *ngIf="authenticated"><a mat-button routerLink="/mangas/create" routerLinkActive="mat-warn">Add Mangas</a></li>
+      <li *ngIf="authenticated && isAdmin"><a mat-button routerLink="/mangas/create" routerLinkActive="mat-warn">Add Mangas</a></li>
       <li *ngIf="!authenticated"><a mat-button routerLink="/auth/login" routerLinkActive="mat-warn">Login</a></li>
       <li *ngIf="!authenticated"><a mat-button routerLink="/auth/register" routerLinkActive="mat-warn">Register</a></li>
       <li *ngIf="authenticated"><a mat-button routerLink="/auth/profile" routerLinkActive="mat-warn">Profile</a></li>

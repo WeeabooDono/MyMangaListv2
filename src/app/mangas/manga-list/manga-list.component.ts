@@ -16,7 +16,8 @@ import { MangasService } from '../mangas.service';
 export class MangaListComponent implements OnInit, OnDestroy {
 
   authenticated = false;
-  id!:string;
+  isAdmin = false;
+  id!: string;
   private authListenerSub!: Subscription;
 
   mangas: Manga[] = [];
@@ -46,6 +47,7 @@ export class MangaListComponent implements OnInit, OnDestroy {
     // initialisations
     this.mangas = this.mangasService.getMangas(this.currentPage, this.pageSize);
     this.id = this.authService.getUserId();
+    
 
     // subscribe to manga service
     this.mangasSub = this.mangasService.getMangasUpdateListener()
@@ -57,12 +59,14 @@ export class MangaListComponent implements OnInit, OnDestroy {
       
 
     this.authenticated = this.authService.getIsAuth();
+    this.isAdmin = this.authService.getIsAdmin();
     // subscribe to auth service
     this.authListenerSub = this.authService.getAuthStatusListener()
       .subscribe(isAuthenticated => {
         this.isLoading = false;
         this.authenticated = isAuthenticated;
         this.id = this.authService.getUserId();
+        this.isAdmin = this.authService.getIsAdmin();
       });
 
     // subscribe to bookmarks service

@@ -11,3 +11,11 @@
 .mat-column-Image {
   width: 15%;
 }
+
+.button-container {
+  display: flex;
+}
+
+.button-container button {
+  width: auto;
+}
