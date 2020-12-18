@@ -1,5 +1,5 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-<table mat-table [dataSource]="bookmarks" class="mat-elevation-z8">
+<table mat-table [dataSource]="bookmarks" class="mat-elevation-z8" *ngIf="bookmarks.length !== 0  && !isLoading">
 
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
