@@ -19,7 +19,7 @@ import { AngularMaterialModule } from './angular-material.module';
 import { MangaModule } from './mangas/mangas.module';
 import { NotFoundComponent } from './notfound/notfound.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
-import { AdminComponent } from './admin/admin.component';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,6 @@ import { AdminComponent } from './admin/admin.component';
     ErrorComponent,
     NotFoundComponent,
     ForbiddenComponent,
-    AdminComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +36,7 @@ import { AdminComponent } from './admin/admin.component';
     HttpClientModule,
     AngularMaterialModule,
     MangaModule,
+    AdminModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
