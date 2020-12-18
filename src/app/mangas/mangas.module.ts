@@ -10,16 +10,12 @@ import { MangaEditComponent } from './manga-edit/manga-edit.component';
 import { MangaListComponent } from './manga-list/manga-list.component';
 
 @NgModule({
-    declarations: [
-        MangaListComponent,
-        MangaCreateComponent,
-        MangaEditComponent
-    ],
-    imports: [
-        CommonModule,
-        RouterModule,
-        ReactiveFormsModule,
-        AngularMaterialModule
-    ]
+  declarations: [MangaListComponent, MangaCreateComponent, MangaEditComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    AngularMaterialModule,
+  ],
 })
-export class MangaModule{}
+export class MangaModule {}

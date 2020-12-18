@@ -1,7 +1,7 @@
 export interface Manga {
-    id: Number;
-    title: string;
-    description: string;
-    author: string;
-    image: File | string;
+  id: number;
+  title: string;
+  description: string;
+  author: string;
+  image: File | string;
 }

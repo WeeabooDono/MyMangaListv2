@@ -8,9 +8,8 @@ describe('MangaCreateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MangaCreateComponent ]
-    })
-    .compileComponents();
+      declarations: [MangaCreateComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

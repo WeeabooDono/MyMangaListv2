@@ -5,20 +5,16 @@ import { AngularMaterialModule } from '../angular-material.module';
 import { AdminComponent } from './admin.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { UsersComponent } from './users/users.component';
-import { MangasComponent } from './mangas/mangas.component'
+import { MangasComponent } from './mangas/mangas.component';
 
 // Auth components
 @NgModule({
-    declarations: [
-        AdminComponent,
-        UsersComponent,
-        MangasComponent
-    ],
-    imports: [
-        CommonModule,
-        AngularMaterialModule,
-        FormsModule,
-        AdminRoutingModule,
-    ]
+  declarations: [AdminComponent, UsersComponent, MangasComponent],
+  imports: [
+    CommonModule,
+    AngularMaterialModule,
+    FormsModule,
+    AdminRoutingModule,
+  ],
 })
-export class AdminModule{}
+export class AdminModule {}

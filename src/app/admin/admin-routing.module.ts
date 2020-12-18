@@ -9,11 +9,11 @@ import { UsersComponent } from './users/users.component';
 const routes: Routes = [
   { path: 'dashboard', component: AdminComponent },
   { path: 'users', component: UsersComponent },
-  { path: 'mangas', component: MangasComponent }
+  { path: 'mangas', component: MangasComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AdminRoutingModule { }
+export class AdminRoutingModule {}

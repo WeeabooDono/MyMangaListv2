@@ -15,22 +15,21 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 
-
 @NgModule({
-    exports: [
-        MatInputModule,
-        MatCardModule,
-        MatButtonModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatExpansionModule,
-        MatProgressSpinnerModule,
-        MatPaginatorModule,
-        MatDialogModule,
-        MatTabsModule,
-        MatDividerModule,
-        MatTableModule,
-        MatMenuModule,
-    ],
+  exports: [
+    MatInputModule,
+    MatCardModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatExpansionModule,
+    MatProgressSpinnerModule,
+    MatPaginatorModule,
+    MatDialogModule,
+    MatTabsModule,
+    MatDividerModule,
+    MatTableModule,
+    MatMenuModule,
+  ],
 })
-export class AngularMaterialModule{}
+export class AngularMaterialModule {}
