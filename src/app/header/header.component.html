@@ -4,9 +4,14 @@
       <mat-icon>menu</mat-icon>
     </button>
     <span><a routerLink="/">MyMangaList</a></span>
-    <ul>
-      <li *ngIf="authenticated && isAdmin"><a mat-button routerLink="/admin/dashboard" routerLinkActive="mat-warn">Administration</a></li>
+    <ul *ngIf="authenticated && isAdmin">
+      <li><a mat-button routerLink="/admin/dashboard" routerLinkActive="mat-warn">Dashboard</a></li>
     </ul>
+    <button mat-button [matMenuTriggerFor]="administrate" *ngIf="authenticated && isAdmin">Administrate</button>
+    <mat-menu #administrate="matMenu">
+      <button mat-menu-item routerLink="/admin/users">Users</button>
+      <button mat-menu-item routerLink="/admin/mangas">Mangas</button>
+    </mat-menu>
     <span class="example-spacer"></span>
     <ul>
       <li *ngIf="authenticated && isAdmin"><a mat-button routerLink="/mangas/create" routerLinkActive="mat-warn">Add Mangas</a></li>

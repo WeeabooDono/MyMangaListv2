@@ -13,6 +13,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTableModule } from '@angular/material/table';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { MatTableModule } from '@angular/material/table';
         MatDialogModule,
         MatTabsModule,
         MatDividerModule,
-        MatTableModule
+        MatTableModule,
+        MatMenuModule,
     ],
 })
 export class AngularMaterialModule{}
