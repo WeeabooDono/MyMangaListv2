@@ -17,8 +17,8 @@ import { AngularMaterialModule } from './angular-material.module';
 
 // Custom modules
 import { MangaModule } from './mangas/mangas.module';
-import { NotFoundComponent } from './notfound/notfound.component';
-import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { NotFoundComponent } from './404/notfound.component';
+import { ForbiddenComponent } from './403/forbidden.component';
 import { AdminModule } from './admin/admin.module';
 
 @NgModule({

@@ -32,8 +32,8 @@
               "src/styles.css"
             ],
             "scripts": [
-              "./src/app/notfound/notfound.js",
-              "./src/app/forbidden/forbidden.js"
+              "./src/app/404/notfound.js",
+              "./src/app/403/forbidden.js"
             ]
           },
           "configurations": {

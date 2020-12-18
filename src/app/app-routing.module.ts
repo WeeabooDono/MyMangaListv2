@@ -5,8 +5,8 @@ import { AdminGuard} from './admin/admin.guard'
 import { MangaCreateComponent } from './mangas/manga-create/manga-create.component';
 import { MangaEditComponent } from './mangas/manga-edit/manga-edit.component';
 import { MangaListComponent } from './mangas/manga-list/manga-list.component';
-import { NotFoundComponent } from './notfound/notfound.component'
-import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { NotFoundComponent } from './404/notfound.component'
+import { ForbiddenComponent } from './403/forbidden.component';
 
 const routes: Routes = [
   { path: '', component: MangaListComponent },
