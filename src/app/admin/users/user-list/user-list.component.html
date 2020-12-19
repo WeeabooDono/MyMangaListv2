@@ -42,6 +42,7 @@
         <td mat-cell *matCellDef="let user">
             <mat-action-row>
                 <a mat-button color="accent" [routerLink]="['/admin/users/edit', user.id]">EDIT</a>
+                <a mat-button color="accent" [routerLink]="['/admin/users/show', user.id]">SHOW</a>
                 <button mat-button color="warn" (click)="onDelete(user.id)" *ngIf="user.id != id">DELETE</button>
             </mat-action-row>
         </td>

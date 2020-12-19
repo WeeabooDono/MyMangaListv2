@@ -7,6 +7,7 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { MangasComponent } from './mangas/mangas.component';
 import { UserListComponent } from './users/user-list/user-list.component';
 import { UserEditComponent } from './users/user-edit/user-edit.component';
+import { UserShowComponent } from './users/user-show/user-show.component';
 
 // Auth components
 @NgModule({
@@ -15,6 +16,7 @@ import { UserEditComponent } from './users/user-edit/user-edit.component';
     MangasComponent,
     UserListComponent,
     UserEditComponent,
+    UserShowComponent,
   ],
   imports: [
     CommonModule,
