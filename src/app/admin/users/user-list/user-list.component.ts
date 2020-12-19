@@ -17,7 +17,14 @@ export class UserListComponent implements OnInit, OnDestroy {
   private usersSub: Subscription = new Subscription();
 
   isLoading = false;
-  displayedColumns: string[] = ['username', 'email', 'status', 'roles'];
+  displayedColumns: string[] = [
+    'index',
+    'username',
+    'email',
+    'status',
+    'roles',
+    'actions',
+  ];
 
   constructor(
     private authService: AuthService,
@@ -41,6 +48,14 @@ export class UserListComponent implements OnInit, OnDestroy {
         this.users = usersData.users;
         this.isLoading = false;
       });
+  }
+
+  onDelete(id: string): void {
+    this.isLoading = true;
+    this.usersService.deleteUser(id).subscribe((userData) => {
+      this.users = this.usersService.getUsers();
+      this.isLoading = false;
+    });
   }
 
   ngOnDestroy(): void {

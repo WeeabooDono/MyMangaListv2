@@ -28,4 +28,16 @@ export class UsersService {
       });
     return [...this.users];
   }
+
+  getUser(id: number): Observable<{ user: User; message: string }> {
+    return this.http.get<{ user: User; message: string }>(
+      `${BACKEND_URL}/${id}`
+    );
+  }
+
+  deleteUser(id: string): Observable<{ data: any; message: string }> {
+    return this.http.delete<{ data: any; message: string }>(
+      `${BACKEND_URL}/${id}`
+    );
+  }
 }
