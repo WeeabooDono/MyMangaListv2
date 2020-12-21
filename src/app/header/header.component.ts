@@ -10,7 +10,7 @@ import { AuthService } from '../auth/auth.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   isAdmin = false;
-  user!: User;
+  authUser!: User;
 
   authenticated = false;
   private authListenerSub!: Subscription;
@@ -20,13 +20,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.authenticated = this.authService.getIsAuth();
     this.isAdmin = this.authService.getIsAdmin();
-    this.user = this.authService.getAuthUser();
+    this.authUser = this.authService.getAuthUser();
 
     this.authListenerSub = this.authService
       .getAuthStatusListener()
       .subscribe((isAuthenticated) => {
         this.authenticated = isAuthenticated;
-        this.user = this.authService.getAuthUser();
+        this.authUser = this.authService.getAuthUser();
         this.isAdmin = this.authService.getIsAdmin();
       });
   }
