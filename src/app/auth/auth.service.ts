@@ -29,6 +29,7 @@ export class AuthService {
   }
 
   getAuthUser(): User {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return this.user!;
   }
 
@@ -119,6 +120,7 @@ export class AuthService {
 
   private getAuthData() {
     const token = localStorage.getItem('token');
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const user = JSON.parse(localStorage.getItem('user')!);
     const expiration = localStorage.getItem('expiration');
     if (!token || !expiration) {
