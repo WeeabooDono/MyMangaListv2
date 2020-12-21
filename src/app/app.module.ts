@@ -20,6 +20,7 @@ import { MangaModule } from './mangas/mangas.module';
 import { NotFoundComponent } from './404/notfound.component';
 import { ForbiddenComponent } from './403/forbidden.component';
 import { AdminModule } from './admin/admin.module';
+import { BookmarkComponent } from './bookmark/bookmark.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { AdminModule } from './admin/admin.module';
     HeaderComponent,
     ErrorComponent,
     NotFoundComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    BookmarkComponent
   ],
   imports: [
     BrowserModule,

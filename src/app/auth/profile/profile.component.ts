@@ -1,55 +1,33 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Bookmark } from 'src/app/bookmarks/bookmark.model';
-import { BookmarksService } from 'src/app/bookmarks/bookmarks.service';
+import { User } from 'src/app/admin/users/user.model';
+import { Bookmark } from 'src/app/bookmark/bookmark.model';
+import { BookmarksService } from 'src/app/bookmark/bookmarks.service';
 import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css'],
+  styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   isLoading = false;
+  authUser!: User;
   private authStatusSub!: Subscription;
 
-  bookmarks: Bookmark[] = [];
-  private bookmarksSub: Subscription = new Subscription();
-
-  displayedColumns: string[] = [
-    'Image',
-    'Manga Title',
-    'Score',
-    'Chapters',
-    'Volumes',
-    'Type',
-    'Actions',
-  ];
-
-  constructor(
-    public authService: AuthService,
-    public bookmarkService: BookmarksService
-  ) {}
+  constructor(public authService: AuthService) {}
 
   ngOnInit(): void {
+    this.authUser = this.authService.getAuthUser();
     this.authStatusSub = this.authService
       .getAuthStatusListener()
       .subscribe((authStatus) => {
         this.isLoading = false;
-      });
-
-    this.bookmarks = this.bookmarkService.getbookmarksfromloggedUser();
-    this.bookmarksSub = this.bookmarkService
-      .getBookmarkUpdateListener()
-      .subscribe((bookmarkData: { bookmarks: Bookmark[] }) => {
-        this.isLoading = false;
-        this.bookmarks = bookmarkData.bookmarks;
-        console.log(this.bookmarks);
+        this.authUser = this.authService.getAuthUser();
       });
   }
 
   ngOnDestroy(): void {
     this.authStatusSub.unsubscribe();
-    this.bookmarksSub.unsubscribe();
   }
 }

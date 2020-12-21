@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { Manga } from './manga.model';
 import { environment } from '../../environments/environment';
-import { Bookmark } from '../bookmarks/bookmark.model';
+import { Bookmark } from '../bookmark/bookmark.model';
 
 const BACKEND_URL = `${environment.apiUrl}/mangas`;
 @Injectable({ providedIn: 'root' })
@@ -34,7 +34,7 @@ export class MangasService {
         this.mangas = data.mangas;
         this.mangasUpdated.next({
           mangas: [...this.mangas],
-          mangaCount: data.count,
+          mangaCount: data.count
         });
       });
     return [...this.mangas];

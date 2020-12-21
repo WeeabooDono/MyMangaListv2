@@ -3,8 +3,8 @@ import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/admin/users/user.model';
 import { AuthService } from 'src/app/auth/auth.service';
-import { Bookmark } from 'src/app/bookmarks/bookmark.model';
-import { BookmarksService } from 'src/app/bookmarks/bookmarks.service';
+import { Bookmark } from 'src/app/bookmark/bookmark.model';
+import { BookmarksService } from 'src/app/bookmark/bookmarks.service';
 
 import { Manga } from '../manga.model';
 import { MangasService } from '../mangas.service';
