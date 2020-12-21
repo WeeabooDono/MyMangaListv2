@@ -7,10 +7,10 @@ import { UsersService } from '../users.service';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.css'],
+  styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit, OnDestroy {
-  id!: string;
+  authUser!: User;
   private authListenerSub: Subscription = new Subscription();
 
   users: User[] = [];
@@ -23,7 +23,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     'email',
     'status',
     'roles',
-    'actions',
+    'actions'
   ];
 
   constructor(
@@ -32,13 +32,13 @@ export class UserListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.id = this.authService.getUserId();
+    this.authUser = this.authService.getAuthUser();
     this.users = this.usersService.getUsers();
 
     this.authListenerSub = this.authService
       .getAuthStatusListener()
       .subscribe(() => {
-        this.id = this.authService.getUserId();
+        this.authUser = this.authService.getAuthUser();
         this.isLoading = false;
       });
 

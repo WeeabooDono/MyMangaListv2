@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
+import { User } from 'src/app/admin/users/user.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Bookmark } from 'src/app/bookmarks/bookmark.model';
 import { BookmarksService } from 'src/app/bookmarks/bookmarks.service';
@@ -11,12 +12,12 @@ import { MangasService } from '../mangas.service';
 @Component({
   selector: 'app-manga-list',
   templateUrl: './manga-list.component.html',
-  styleUrls: ['./manga-list.component.css'],
+  styleUrls: ['./manga-list.component.css']
 })
 export class MangaListComponent implements OnInit, OnDestroy {
   authenticated = false;
   isAdmin = false;
-  id!: string;
+  authUser!: User;
   private authListenerSub!: Subscription;
 
   mangas: Manga[] = [];
@@ -49,7 +50,7 @@ export class MangaListComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     // initialisations
     this.mangas = this.mangasService.getMangas(this.currentPage, this.pageSize);
-    this.id = this.authService.getUserId();
+    this.authUser = this.authService.getAuthUser();
 
     // subscribe to manga service
     this.mangasSub = this.mangasService
@@ -68,7 +69,7 @@ export class MangaListComponent implements OnInit, OnDestroy {
       .subscribe((isAuthenticated) => {
         this.isLoading = false;
         this.authenticated = isAuthenticated;
-        this.id = this.authService.getUserId();
+        this.authUser = this.authService.getAuthUser();
         this.isAdmin = this.authService.getIsAdmin();
       });
 

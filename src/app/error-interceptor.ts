@@ -5,7 +5,7 @@ import {
   HttpResponse,
   HttpRequest,
   HttpHandler,
-  HttpErrorResponse,
+  HttpErrorResponse
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';

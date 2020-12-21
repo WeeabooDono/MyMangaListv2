@@ -18,9 +18,10 @@
       <li *ngIf="!authenticated"><a mat-button routerLink="/auth/login" routerLinkActive="mat-warn">Login</a></li>
       <li *ngIf="!authenticated"><a mat-button routerLink="/auth/register" routerLinkActive="mat-warn">Register</a></li>
       <li *ngIf="authenticated"><a mat-button routerLink="/auth/profile" routerLinkActive="mat-warn">Profile</a></li>
+      <li *ngIf="authenticated"><img [src]="user.image" alt="profile_picture" class="profile-image"></li>
       <li *ngIf="authenticated"><button mat-button (click)="onLogout()">Logout</button></li>
     </ul>
-    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    <button *ngIf="authenticated" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
       <mat-icon>favorite</mat-icon>
     </button>
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">

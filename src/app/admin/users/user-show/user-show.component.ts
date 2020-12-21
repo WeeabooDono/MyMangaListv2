@@ -6,7 +6,7 @@ import { UsersService } from '../users.service';
 @Component({
   selector: 'app-user-show',
   templateUrl: './user-show.component.html',
-  styleUrls: ['./user-show.component.css'],
+  styleUrls: ['./user-show.component.css']
 })
 export class UserShowComponent implements OnInit {
   public isLoading = false;

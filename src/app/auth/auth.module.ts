@@ -11,11 +11,6 @@ import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [LoginComponent, SignupComponent, ProfileComponent],
-  imports: [
-    CommonModule,
-    AngularMaterialModule,
-    FormsModule,
-    AuthRoutingModule,
-  ],
+  imports: [CommonModule, AngularMaterialModule, FormsModule, AuthRoutingModule]
 })
 export class AuthModule {}

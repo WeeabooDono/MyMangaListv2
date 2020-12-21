@@ -5,18 +5,18 @@ import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { AuthData } from './auth-data.model';
 import { environment } from '../../environments/environment';
+import { User } from '../admin/users/user.model';
 
 const BACKEND_URL = `${environment.apiUrl}/auth`;
 const SEPARATOR = ',';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private token!: string;
+  private user!: User | null;
   private isAuthenticated = false;
   private isAdmin = false;
   private tokenTimer!: any;
   private authStatusListener = new Subject<boolean>();
-  private id!: string;
-  private roles!: string[] | undefined;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -28,16 +28,12 @@ export class AuthService {
     return this.isAuthenticated;
   }
 
+  getAuthUser(): User {
+    return this.user!;
+  }
+
   getIsAdmin(): boolean {
     return this.isAdmin;
-  }
-
-  getUserId(): string {
-    return this.id;
-  }
-
-  getUserRoles(): string[] | undefined {
-    return this.roles;
   }
 
   getAuthStatusListener(): Observable<boolean> {
@@ -66,24 +62,29 @@ export class AuthService {
         message: string;
         token: string;
         expiresIn: number;
-        id: string;
-        roles: string[];
+        user: User;
       }>(`${BACKEND_URL}/login`, { email, password })
       .subscribe(
         (response) => {
           const token = response.token;
           this.token = token;
           if (token) {
+            // token info
             const expiresIn = response.expiresIn;
             this.setAuthTimer(expiresIn);
+
+            // set datas
             this.isAuthenticated = true;
-            this.id = response.id;
-            this.roles = response.roles;
-            if (this.roles.includes('ADMIN')) this.isAdmin = true;
+            this.user = response.user;
+            if (this.user.roles.includes('ADMIN')) this.isAdmin = true;
+
+            // notify and manually create token expiration
             this.authStatusListener.next(true);
             const now = new Date();
             const expirationDate = new Date(now.getTime() + expiresIn * 1000);
-            this.saveAuthData(token, expirationDate, this.id, this.roles);
+
+            // save datas
+            this.saveAuthData(token, expirationDate, this.user);
             this.router.navigate(['/']);
           }
         },
@@ -95,47 +96,36 @@ export class AuthService {
 
   logout(): void {
     this.token = '';
-    this.id = '';
     this.isAuthenticated = false;
     this.authStatusListener.next(false);
     this.isAdmin = false;
-    this.roles = [];
+    this.user = null;
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
     this.router.navigate(['/']);
   }
 
-  private saveAuthData(
-    token: string,
-    expirationDate: Date,
-    id: string,
-    roles: string[]
-  ) {
-    const string_roles = roles.join(SEPARATOR);
+  private saveAuthData(token: string, expirationDate: Date, user: User) {
     localStorage.setItem('token', token);
-    localStorage.setItem('id', id);
-    localStorage.setItem('roles', string_roles);
+    localStorage.setItem('user', JSON.stringify(user));
     localStorage.setItem('expiration', expirationDate.toISOString());
   }
 
   private clearAuthData() {
-    localStorage.removeItem('roles');
     localStorage.removeItem('token');
-    localStorage.removeItem('id');
     localStorage.removeItem('expiration');
+    localStorage.removeItem('user');
   }
 
   private getAuthData() {
     const token = localStorage.getItem('token');
-    const id = localStorage.getItem('id');
+    console.log(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('user')!);
     const expiration = localStorage.getItem('expiration');
-    const roles: string[] | undefined = localStorage
-      .getItem('roles')
-      ?.split(SEPARATOR);
     if (!token || !expiration) {
       return;
     }
-    return { token, expiration: new Date(expiration), id, roles };
+    return { token, expiration: new Date(expiration), user };
   }
 
   private setAuthTimer(duration: number) {
@@ -153,9 +143,8 @@ export class AuthService {
     if (expiresIn > 0) {
       this.token = authInformation.token;
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      this.id = authInformation.id!;
-      this.roles = authInformation.roles;
-      if (this.roles?.includes('ADMIN')) this.isAdmin = true;
+      this.user = authInformation.user!;
+      if (this.user?.roles.includes('ADMIN')) this.isAdmin = true;
       this.setAuthTimer(expiresIn / 1000);
       this.isAuthenticated = true;
       this.authStatusListener.next(true);
