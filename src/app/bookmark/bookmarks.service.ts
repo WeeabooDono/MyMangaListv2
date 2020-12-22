@@ -25,7 +25,7 @@ export class BookmarksService {
       .subscribe((data) => {
         this.bookmarks = data.bookmarks;
         this.bookmarksUpdated.next({
-          bookmarks: [...this.bookmarks],
+          bookmarks: [...this.bookmarks]
         });
       });
     return [...this.bookmarks];
@@ -37,7 +37,7 @@ export class BookmarksService {
       .subscribe((data) => {
         this.bookmarks = data.bookmarks;
         this.bookmarksUpdated.next({
-          bookmarks: [...this.bookmarks],
+          bookmarks: [...this.bookmarks]
         });
       });
     return [...this.bookmarks];

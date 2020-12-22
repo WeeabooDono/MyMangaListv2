@@ -50,7 +50,7 @@ export class UserListComponent implements OnInit, OnDestroy {
       });
   }
 
-  onDelete(id: string): void {
+  onDelete(id: number): void {
     this.isLoading = true;
     this.usersService.deleteUser(id).subscribe((userData) => {
       this.users = this.usersService.getUsers();

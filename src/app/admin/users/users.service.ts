@@ -23,7 +23,7 @@ export class UsersService {
       .subscribe((data) => {
         this.users = data.users;
         this.usersUpdated.next({
-          users: [...this.users],
+          users: [...this.users]
         });
       });
     return [...this.users];
@@ -35,7 +35,15 @@ export class UsersService {
     );
   }
 
-  deleteUser(id: string): Observable<{ data: any; message: string }> {
+  getUserByUsername(
+    username: string
+  ): Observable<{ user: User; message: string }> {
+    return this.http.get<{ user: User; message: string }>(
+      `${BACKEND_URL}/username/${username}`
+    );
+  }
+
+  deleteUser(id: number): Observable<{ data: any; message: string }> {
     return this.http.delete<{ data: any; message: string }>(
       `${BACKEND_URL}/${id}`
     );
