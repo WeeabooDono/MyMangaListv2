@@ -1,1 +1,57 @@
-<p>this is {{ authUser.username }}</p>
+<mat-tab-group color="accent" backgroundColor="accent">
+
+    <!-- Profile -->
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="tab-icon">perm_identity</mat-icon>
+            Profile
+        </ng-template>
+
+        <profile-content
+            *ngIf='user'
+            [authUser]="authUser"
+            [user]="user">
+        </profile-content>
+    </mat-tab>
+  
+    <!-- Friends -->
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="tab-icon">groups</mat-icon>
+            Friends
+        </ng-template>
+  
+      Content 2
+    </mat-tab>
+    
+    <!-- Notifications -->
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="tab-icon">notifications</mat-icon>
+            Notifications
+        </ng-template>
+  
+        Content 3
+    </mat-tab>
+    
+    <!-- Account -->
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="tab-icon">settings</mat-icon>
+            Account
+        </ng-template>
+  
+        Content 4
+    </mat-tab>
+
+    <!-- Settings -->
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="tab-icon">settings_applications</mat-icon>
+            Settings
+        </ng-template>
+
+        Content 5
+    </mat-tab>
+
+</mat-tab-group>

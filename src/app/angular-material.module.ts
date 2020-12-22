@@ -15,6 +15,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   exports: [
@@ -32,6 +33,7 @@ import { MatChipsModule } from '@angular/material/chips';
     MatTableModule,
     MatMenuModule,
     MatChipsModule,
-  ],
+    MatGridListModule
+  ]
 })
 export class AngularMaterialModule {}

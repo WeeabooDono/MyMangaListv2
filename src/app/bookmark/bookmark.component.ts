@@ -47,30 +47,39 @@ export class BookmarkComponent implements OnInit, OnDestroy {
 
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.get('username') == null) return;
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       this.username = paramMap.get('username')!;
       this.isLoading = true;
       this.usersService
         .getUserByUsername(this.username)
         .subscribe((userData) => {
           this.user = userData.user;
-          this.user.status === 'public'
-            ? (this.isPublic = true)
-            : (this.isPublic = false);
-          console.log('user:' + this.user.username);
-          console.log('authUser:' + this.authUser.username);
-          // if it is not the authenticated User and the profile is private, redirect to 403
-          if (this.user.id !== this.authUser.id && !this.isPublic) {
-            this.router.navigate(['/403']);
-          }
+          if (!this.user) this.router.navigate(['/404']);
+          else {
+            this.user.status === 'public'
+              ? (this.isPublic = true)
+              : (this.isPublic = false);
 
-          // get the bookmarks
-          this.bookmarks = this.bookmarkService.getBookmarks(this.user.id);
-          this.bookmarksSub = this.bookmarkService
-            .getBookmarkUpdateListener()
-            .subscribe((bookmarkData: { bookmarks: Bookmark[] }) => {
-              this.isLoading = false;
-              this.bookmarks = bookmarkData.bookmarks;
-            });
+            // if it is not the authenticated User and the profile is private, redirect to 403
+            if (this.authUser) {
+              if (this.user.id !== this.authUser.id && !this.isPublic) {
+                this.router.navigate(['/403']);
+              }
+            } else {
+              if (!this.isPublic) {
+                this.router.navigate(['/403']);
+              }
+            }
+
+            // get the bookmarks
+            this.bookmarks = this.bookmarkService.getBookmarks(this.user.id);
+            this.bookmarksSub = this.bookmarkService
+              .getBookmarkUpdateListener()
+              .subscribe((bookmarkData: { bookmarks: Bookmark[] }) => {
+                this.isLoading = false;
+                this.bookmarks = bookmarkData.bookmarks;
+              });
+          }
         });
     });
   }

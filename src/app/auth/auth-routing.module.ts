@@ -7,11 +7,11 @@ import { SignupComponent } from './signup/signup.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: SignupComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile/:username', component: ProfileComponent }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class AuthRoutingModule {}

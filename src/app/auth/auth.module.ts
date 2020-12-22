@@ -8,9 +8,15 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { ProfileComponent } from './profile/profile.component';
+import { ContentComponent } from './profile/content/content.component';
 
 @NgModule({
-  declarations: [LoginComponent, SignupComponent, ProfileComponent],
+  declarations: [
+    LoginComponent,
+    SignupComponent,
+    ProfileComponent,
+    ContentComponent
+  ],
   imports: [CommonModule, AngularMaterialModule, FormsModule, AuthRoutingModule]
 })
 export class AuthModule {}

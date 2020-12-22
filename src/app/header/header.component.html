@@ -25,7 +25,7 @@
     </button>
     <!-- ngIf="authenticated" doesn't work on mat-menu -->
     <mat-menu #menu="matMenu">
-      <button *ngIf="authenticated" mat-menu-item routerLink="/auth/profile">Profile</button>
+      <button *ngIf="authenticated" mat-menu-item [routerLink]="['/auth/profile/', authUser.username]">Profile</button>
       <button *ngIf="authenticated" mat-menu-item [routerLink]="['/bookmark/', authUser.username]">My manga list</button>
       <button *ngIf="authenticated" mat-menu-item (click)="onLogout()">Logout</button>
     </mat-menu>

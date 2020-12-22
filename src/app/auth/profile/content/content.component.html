@@ -1,0 +1,31 @@
+<mat-grid-list cols="16" rowHeight="48">
+    <!-- Left -->
+    <mat-grid-tile
+        colspan=4
+        rowspan=10>
+        <img [src]="user.image" [alt]="user.username">
+    </mat-grid-tile>
+
+    <!-- Right -->
+    <mat-grid-tile
+        colspan=12
+        rowspan=12>
+        Right
+    </mat-grid-tile>
+
+    <!-- Bottom left -->
+    <mat-grid-tile
+        colspan=4
+        rowspan=2>
+        <h1>{{ user.username }}</h1>
+        <button mat-menu-item [routerLink]="['/bookmark/', user.username]">My manga list</button>
+    </mat-grid-tile>
+
+    <!-- Bottom -->
+    <mat-grid-tile
+        colspan=16
+        rowspan=4>
+        Bottom
+    </mat-grid-tile>
+
+</mat-grid-list>
