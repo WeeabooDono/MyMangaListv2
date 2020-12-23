@@ -30,16 +30,4 @@ export class BookmarksService {
       });
     return [...this.bookmarks];
   }
-
-  getbookmarksfromloggedUser(): Bookmark[] {
-    this.http
-      .get<{ message: string; bookmarks: Bookmark[] }>(`${BACKEND_URL}/user`)
-      .subscribe((data) => {
-        this.bookmarks = data.bookmarks;
-        this.bookmarksUpdated.next({
-          bookmarks: [...this.bookmarks]
-        });
-      });
-    return [...this.bookmarks];
-  }
 }

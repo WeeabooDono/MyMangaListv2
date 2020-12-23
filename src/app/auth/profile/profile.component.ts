@@ -16,15 +16,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
   isLoading = false;
 
   private username!: string;
-  public user!: User;
-  public isPublic = false;
 
+  public isPublic = false;
+  public isLoggedUser = false;
   public authUser!: User;
+  public user!: User;
 
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService,
-    public bookmarkService: BookmarksService,
     public usersService: UsersService,
     private router: Router
   ) {}
@@ -40,23 +40,27 @@ export class ProfileComponent implements OnInit, OnDestroy {
         .getUserByUsername(this.username)
         .subscribe((userData) => {
           this.user = userData.user;
-          if (!this.user) this.router.navigate(['/404']);
-          else {
-            this.user.status === 'public'
-              ? (this.isPublic = true)
-              : (this.isPublic = false);
+          // if the profile exists
+          if (this.user) {
+            // if the profile is public or not
+            this.isPublic = this.user.status === 'public';
 
             // if it is not the authenticated User and the profile is private, redirect to 403
             if (this.authUser) {
-              if (this.user.id !== this.authUser.id && !this.isPublic) {
+              // if it is the profile of the logged user
+              this.isLoggedUser = this.user.id === this.authUser.id;
+
+              // if it is not the logged user and it is private
+              if (!this.isLoggedUser && !this.isPublic) {
                 this.router.navigate(['/403']);
               }
             } else {
+              // if you're not logged in and the profile is private
               if (!this.isPublic) {
                 this.router.navigate(['/403']);
               }
             }
-          }
+          } else this.router.navigate(['/404']);
         });
     });
   }

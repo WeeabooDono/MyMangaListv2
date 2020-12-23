@@ -7,10 +7,7 @@
             Profile
         </ng-template>
 
-        <profile-content
-            *ngIf='user'
-            [authUser]="authUser"
-            [user]="user">
+        <profile-content *ngIf='user'>
         </profile-content>
     </mat-tab>
   

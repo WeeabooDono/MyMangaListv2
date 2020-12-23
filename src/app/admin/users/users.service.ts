@@ -48,4 +48,24 @@ export class UsersService {
       `${BACKEND_URL}/${id}`
     );
   }
+
+  uploadProfileImage(user: User): Observable<{ user: User; message: string }> {
+    let userData: User | FormData;
+
+    if (typeof user.image === 'object') {
+      userData = new FormData();
+      userData.append('username', user.username);
+      userData.append('status', user.status);
+      userData.append('email', user.email);
+      userData.append('image', user.image, user.username);
+      console.log(userData);
+    } else userData = user;
+
+    console.log('FE ==> upload');
+    console.log(user);
+    return this.http.patch<{ user: User; message: string }>(
+      `${BACKEND_URL}/${user.id}`,
+      userData
+    );
+  }
 }

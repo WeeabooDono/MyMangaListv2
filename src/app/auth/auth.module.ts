@@ -17,6 +17,7 @@ import { ContentComponent } from './profile/content/content.component';
     ProfileComponent,
     ContentComponent
   ],
+
   imports: [CommonModule, AngularMaterialModule, FormsModule, AuthRoutingModule]
 })
 export class AuthModule {}

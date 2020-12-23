@@ -1,3 +1,20 @@
 mat-grid-tile {
   background: lightblue;
 }
+
+input[type='file'] {
+  visibility: hidden;
+}
+
+.profile-image-container {
+  width: auto;
+}
+
+.profile-image img {
+  width: 80%;
+  margin: 3%;
+}
+
+.profile-image-upload {
+  text-align: center;
+}

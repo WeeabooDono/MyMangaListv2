@@ -20,7 +20,7 @@
 
     <!-- Authenticated part -->
     <button mat-button [matMenuTriggerFor]="menu" *ngIf="authenticated">
-      <img [src]="authUser.image" alt="profile_picture" class="profile-image">
+      <!-- <img [src]="authUser.image" alt="profile_picture" class="profile-image"> -->
       {{ authUser.username }}
     </button>
     <!-- ngIf="authenticated" doesn't work on mat-menu -->

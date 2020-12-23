@@ -75,7 +75,7 @@ export class MangaListComponent implements OnInit, OnDestroy {
 
     // subscribe to bookmarks service
     if (this.authenticated) {
-      this.bookmarks = this.bookmarkService.getbookmarksfromloggedUser();
+      this.bookmarks = this.bookmarkService.getBookmarks(this.authUser.id);
       this.bookmarksSub = this.bookmarkService
         .getBookmarkUpdateListener()
         .subscribe((bookmarkData: { bookmarks: Bookmark[] }) => {
@@ -110,7 +110,7 @@ export class MangaListComponent implements OnInit, OnDestroy {
       () => {
         this.mangasService.getMangas(this.currentPage, this.pageSize);
         if (this.authenticated) {
-          this.bookmarks = this.bookmarkService.getbookmarksfromloggedUser();
+          this.bookmarks = this.bookmarkService.getBookmarks(this.authUser.id);
         }
       },
       () => {
@@ -124,7 +124,7 @@ export class MangaListComponent implements OnInit, OnDestroy {
       () => {
         this.mangasService.getMangas(this.currentPage, this.pageSize);
         if (this.authenticated) {
-          this.bookmarks = this.bookmarkService.getbookmarksfromloggedUser();
+          this.bookmarks = this.bookmarkService.getBookmarks(this.authUser.id);
         }
       },
       () => {
