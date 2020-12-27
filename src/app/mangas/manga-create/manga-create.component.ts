@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 
@@ -40,6 +40,7 @@ export class MangaCreateComponent implements OnInit, OnDestroy {
         validators: [Validators.required],
         asyncValidators: [mimeType],
       }),
+      genres: new FormArray([], {}),
     });
     this.authStatusSub = this.authService
       .getAuthStatusListener()

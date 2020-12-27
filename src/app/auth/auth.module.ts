@@ -15,9 +15,14 @@ import { ContentComponent } from './profile/content/content.component';
     LoginComponent,
     SignupComponent,
     ProfileComponent,
-    ContentComponent
+    ContentComponent,
   ],
 
-  imports: [CommonModule, AngularMaterialModule, FormsModule, AuthRoutingModule]
+  imports: [
+    CommonModule,
+    AngularMaterialModule,
+    FormsModule,
+    AuthRoutingModule,
+  ],
 })
 export class AuthModule {}

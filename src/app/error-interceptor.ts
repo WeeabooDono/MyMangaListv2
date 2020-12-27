@@ -5,7 +5,7 @@ import {
   HttpResponse,
   HttpRequest,
   HttpHandler,
-  HttpErrorResponse
+  HttpErrorResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -19,7 +19,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   intercept(
     httpRequest: HttpRequest<any>,
-    next: HttpHandler
+    next: HttpHandler,
   ): Observable<HttpEvent<any>> {
     return next.handle(httpRequest).pipe(
       catchError((httpErrorResponse: HttpErrorResponse) => {
@@ -29,7 +29,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         }
         this.dialog.open(ErrorComponent, { data: { message: errorMessage } });
         return throwError(httpErrorResponse);
-      })
+      }),
     );
   }
 }

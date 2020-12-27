@@ -1,0 +1,10 @@
+<mat-dialog-content>
+	<p>
+		{{message}}
+	</p>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+	<!--  tabindex="-1" on confirm and 1 on cancel so Enter will cancel instead of confirming, security on delete -->
+	<button mat-raised-button color="primary" (click)="onConfirmClick()" tabindex="-1">{{confirmButtonText}}</button>
+	<button mat-raised-button mat-dialog-close tabindex="1">{{cancelButtonText}}</button>
+</mat-dialog-actions>

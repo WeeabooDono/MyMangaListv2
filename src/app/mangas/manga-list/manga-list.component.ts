@@ -1,10 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/admin/users/user.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Bookmark } from 'src/app/bookmarks/bookmark.model';
 import { BookmarksService } from 'src/app/bookmarks/bookmarks.service';
+import { ConfirmationDialog } from '../confirmation-dialog.component';
 
 import { Manga } from '../manga.model';
 import { MangasService } from '../mangas.service';
@@ -38,6 +41,8 @@ export class MangaListComponent implements OnInit, OnDestroy {
     public mangasService: MangasService,
     public bookmarkService: BookmarksService,
     private authService: AuthService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
   ) {}
 
   ngOnDestroy(): void {
@@ -93,16 +98,30 @@ export class MangaListComponent implements OnInit, OnDestroy {
   }
 
   onDelete(id: number): void {
-    this.isLoading = true;
-    this.mangasService.deleteManga(id).subscribe(
-      () => {
-        // to update data since we update datas when we get mangas
-        this.mangasService.getMangas(this.currentPage, this.pageSize);
+    const dialogRef = this.dialog.open(ConfirmationDialog, {
+      data: {
+        message: 'Are you sure you want to delete this manga ?',
+        buttonText: {
+          ok: 'Delete',
+          cancel: 'No',
+        },
       },
-      () => {
-        this.isLoading = false;
-      },
-    );
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.isLoading = true;
+        this.mangasService.deleteManga(id).subscribe(
+          () => {
+            // to update data since we update datas when we get mangas
+            this.mangasService.getMangas(this.currentPage, this.pageSize);
+          },
+          () => {
+            this.isLoading = false;
+          },
+        );
+      }
+    });
   }
 
   onBookmark(id: number): void {

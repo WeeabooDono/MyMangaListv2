@@ -17,6 +17,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   exports: [
@@ -36,6 +37,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatChipsModule,
     MatGridListModule,
     MatCheckboxModule,
+    MatSnackBarModule,
   ],
 })
 export class AngularMaterialModule {}

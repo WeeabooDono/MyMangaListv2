@@ -3,7 +3,7 @@ import { AbstractControl } from '@angular/forms';
 import { Observable, Observer } from 'rxjs';
 
 export const mimeType = (
-  control: AbstractControl
+  control: AbstractControl,
 ): Promise<{ [key: string]: any }> | Observable<{ [key: string]: any }> => {
   const file = control.value as File;
   const fileReader = new FileReader();
@@ -11,7 +11,7 @@ export const mimeType = (
     fileReader.addEventListener('loadend', () => {
       const arr = new Uint8Array(fileReader.result as ArrayBuffer).subarray(
         0,
-        4
+        4,
       );
       let header = '';
       let isValid = false;
