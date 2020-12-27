@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
 import { AdminGuard } from './admin/admin.guard';
-import { MangaCreateComponent } from './mangas/manga-create/manga-create.component';
-import { MangaEditComponent } from './mangas/manga-edit/manga-edit.component';
 import { MangaListComponent } from './mangas/manga-list/manga-list.component';
 import { NotFoundComponent } from './404/notfound.component';
 import { ForbiddenComponent } from './403/forbidden.component';
@@ -11,16 +9,6 @@ import { BookmarksComponent } from './bookmarks/bookmarks.component';
 
 const routes: Routes = [
   { path: '', component: MangaListComponent },
-  {
-    path: 'mangas/create',
-    component: MangaCreateComponent,
-    canActivate: [AuthGuard, AdminGuard],
-  },
-  {
-    path: 'mangas/edit/:id',
-    component: MangaEditComponent,
-    canActivate: [AuthGuard, AdminGuard],
-  },
   {
     path: 'admin',
     loadChildren: () =>

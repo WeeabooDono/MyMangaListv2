@@ -1,0 +1,57 @@
+<button mat-button color="warn" routerLink="/admin/mangas/create">Add Mangas</button>
+<table mat-table [dataSource]="mangas" class="mat-elevation-z8" *ngIf="mangas.length !== 0  && !isLoading">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Index Column -->
+    <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef> No </th>
+        <td mat-cell *matCellDef="let user; let i = index"> {{ i + 1 }} </td>
+    </ng-container>
+
+    <!-- image Column -->
+    <ng-container matColumnDef="Image">
+        <th mat-header-cell *matHeaderCellDef> Image </th>
+        <td mat-cell *matCellDef="let manga"> 
+            <div class="manga-image">
+                <img [src]="manga.image" [alt]="manga.title">
+            </div> 
+        </td>
+    </ng-container>
+  
+    <!-- Title Column -->
+    <ng-container matColumnDef="Manga Title">
+        <th mat-header-cell *matHeaderCellDef> Manga Title </th>
+        <td mat-cell *matCellDef="let manga"> {{ manga.title }} </td>
+    </ng-container>
+  
+    <!-- Author Column -->
+    <ng-container matColumnDef="Author">
+        <th mat-header-cell *matHeaderCellDef> Author </th>
+        <td mat-cell *matCellDef="let manga"> {{ manga.author }} </td>
+    </ng-container>
+
+    <!-- Type Column -->
+    <ng-container matColumnDef="Type">
+        <th mat-header-cell *matHeaderCellDef> Type </th>
+        <td mat-cell *matCellDef="let manga"> Manga </td>
+    </ng-container>
+  
+    <!-- Actions Column -->
+    <ng-container matColumnDef="Actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let manga">
+            <mat-action-row>
+                <a mat-button color="accent" [routerLink]="['/admin/mangas/edit', manga.id]">EDIT</a><br>
+                <a mat-button color="accent" [routerLink]="['/admin/mangas/show', manga.id]">SHOW</a><br>
+                <button mat-button color="warn" (click)="onDelete(manga.id)">DELETE</button>
+            </mat-action-row>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<p class="info-text mat-body-1" *ngIf="mangas.length === 0  && !isLoading">No mangas added yet</p>

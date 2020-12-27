@@ -40,6 +40,19 @@ export class MangasService {
     return [...this.mangas];
   }
 
+  getMangasList(): Manga[] {
+    this.http
+      .get<{ message: string; mangas: any; count: number }>(`${BACKEND_URL}`)
+      .subscribe((data) => {
+        this.mangas = data.mangas;
+        this.mangasUpdated.next({
+          mangas: [...this.mangas],
+          mangaCount: data.count,
+        });
+      });
+    return [...this.mangas];
+  }
+
   getManga(id: number): Observable<{ manga: Manga; message: string }> {
     return this.http.get<{ manga: Manga; message: string }>(
       `${BACKEND_URL}/${id}`,

@@ -7,7 +7,7 @@ import { User } from 'src/app/admin/users/user.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Bookmark } from 'src/app/bookmarks/bookmark.model';
 import { BookmarksService } from 'src/app/bookmarks/bookmarks.service';
-import { ConfirmationDialog } from '../confirmation-dialog.component';
+import { ConfirmationDialog } from '../../admin/mangas/confirmation-dialog.component';
 
 import { Manga } from '../manga.model';
 import { MangasService } from '../mangas.service';
@@ -95,33 +95,6 @@ export class MangaListComponent implements OnInit, OnDestroy {
     this.currentPage = pageData.pageIndex + 1;
     this.pageSize = pageData.pageSize;
     this.mangas = this.mangasService.getMangas(this.currentPage, this.pageSize);
-  }
-
-  onDelete(id: number): void {
-    const dialogRef = this.dialog.open(ConfirmationDialog, {
-      data: {
-        message: 'Are you sure you want to delete this manga ?',
-        buttonText: {
-          ok: 'Delete',
-          cancel: 'No',
-        },
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      if (confirmed) {
-        this.isLoading = true;
-        this.mangasService.deleteManga(id).subscribe(
-          () => {
-            // to update data since we update datas when we get mangas
-            this.mangasService.getMangas(this.currentPage, this.pageSize);
-          },
-          () => {
-            this.isLoading = false;
-          },
-        );
-      }
-    });
   }
 
   onBookmark(id: number): void {

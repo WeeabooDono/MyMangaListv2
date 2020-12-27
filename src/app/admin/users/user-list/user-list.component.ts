@@ -7,7 +7,7 @@ import { UsersService } from '../users.service';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.css']
+  styleUrls: ['./user-list.component.css'],
 })
 export class UserListComponent implements OnInit, OnDestroy {
   authUser!: User;
@@ -23,12 +23,12 @@ export class UserListComponent implements OnInit, OnDestroy {
     'email',
     'status',
     'roles',
-    'actions'
+    'actions',
   ];
 
   constructor(
     private authService: AuthService,
-    public usersService: UsersService
+    public usersService: UsersService,
   ) {}
 
   ngOnInit(): void {

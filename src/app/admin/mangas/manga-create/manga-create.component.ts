@@ -3,8 +3,8 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 
-import { Manga } from '../manga.model';
-import { MangasService } from '../mangas.service';
+import { Manga } from '../../../mangas/manga.model';
+import { MangasService } from '../../../mangas/mangas.service';
 import { mimeType } from './mime-type.validator';
 
 @Component({
