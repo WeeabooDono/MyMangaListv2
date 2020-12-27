@@ -15,7 +15,7 @@ import { MangaListComponent } from './manga-list/manga-list.component';
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
-    AngularMaterialModule
-  ]
+    AngularMaterialModule,
+  ],
 })
 export class MangaModule {}

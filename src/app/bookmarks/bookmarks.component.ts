@@ -1,18 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Bookmark } from 'src/app/bookmark/bookmark.model';
-import { BookmarksService } from 'src/app/bookmark/bookmarks.service';
+import { Bookmark } from 'src/app/bookmarks/bookmark.model';
+import { BookmarksService } from 'src/app/bookmarks/bookmarks.service';
 import { User } from '../admin/users/user.model';
 import { UsersService } from '../admin/users/users.service';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
-  selector: 'app-bookmark',
-  templateUrl: './bookmark.component.html',
-  styleUrls: ['./bookmark.component.css']
+  selector: 'app-bookmarks',
+  templateUrl: './bookmarks.component.html',
+  styleUrls: ['./bookmarks.component.css'],
 })
-export class BookmarkComponent implements OnInit, OnDestroy {
+export class BookmarksComponent implements OnInit, OnDestroy {
   isLoading = false;
 
   bookmarks: Bookmark[] = [];
@@ -31,7 +31,7 @@ export class BookmarkComponent implements OnInit, OnDestroy {
     'Chapters',
     'Volumes',
     'Type',
-    'Actions'
+    'Actions',
   ];
 
   constructor(
@@ -39,7 +39,7 @@ export class BookmarkComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     public bookmarkService: BookmarksService,
     public usersService: UsersService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {

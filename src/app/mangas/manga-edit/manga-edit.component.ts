@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { Genre } from 'src/app/genres/genre.model';
+import { GenresService } from 'src/app/genres/genres.service';
 
 import { Manga } from '../manga.model';
 import { MangasService } from '../mangas.service';
@@ -19,13 +22,17 @@ export class MangaEditComponent implements OnInit {
   form!: FormGroup;
   isLoading = false;
 
+  genres: Genre[] = [];
+  private genresSub: Subscription = new Subscription();
+
   private id!: number;
   private authStatusSub!: Subscription;
 
   constructor(
     public mangasService: MangasService,
+    public genresService: GenresService,
     public route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +50,7 @@ export class MangaEditComponent implements OnInit {
         validators: [Validators.required],
         asyncValidators: [mimeType],
       }),
+      genres: new FormArray([], {}),
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('id')) {
@@ -57,6 +65,11 @@ export class MangaEditComponent implements OnInit {
             author: this.manga.author,
             description: this.manga.description,
             image: this.manga.image,
+            genres: [],
+          });
+          const genres: FormArray = this.form.get('genres') as FormArray;
+          this.manga.genres.forEach((genre) => {
+            genres.push(new FormControl(genre));
           });
         });
       }
@@ -66,11 +79,19 @@ export class MangaEditComponent implements OnInit {
       .subscribe((authStatus) => {
         this.isLoading = false;
       });
+
+    this.genres = this.genresService.getGenres();
+    this.genresService
+      .getGenreUpdateListener()
+      .subscribe((genresData: { genres: Genre[] }) => {
+        this.genres = genresData.genres;
+      });
   }
 
   onEditManga(): void {
     if (this.form.invalid) return;
 
+    console.log(this.form.value.genres);
     this.isLoading = true;
     const manga: Manga = {
       id: this.id,
@@ -78,6 +99,7 @@ export class MangaEditComponent implements OnInit {
       description: this.form.value.description,
       author: this.form.value.author,
       image: this.form.value.image,
+      genres: this.form.value.genres,
     };
     this.mangasService.updateManga(manga);
     this.form.reset();
@@ -98,7 +120,25 @@ export class MangaEditComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
+  onCheckboxChange(event: MatCheckboxChange): void {
+    const genres: FormArray = this.form.get('genres') as FormArray;
+
+    if (event.checked) {
+      genres.push(new FormControl(event.source.value));
+    } else {
+      let i = 0;
+      genres.controls.forEach((item) => {
+        if (item.value == event.source.value) {
+          genres.removeAt(i);
+          return;
+        }
+        i++;
+      });
+    }
+  }
+
   ngOnDestroy(): void {
     this.authStatusSub.unsubscribe();
+    this.genresSub.unsubscribe();
   }
 }

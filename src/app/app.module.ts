@@ -20,7 +20,7 @@ import { MangaModule } from './mangas/mangas.module';
 import { NotFoundComponent } from './404/notfound.component';
 import { ForbiddenComponent } from './403/forbidden.component';
 import { AdminModule } from './admin/admin.module';
-import { BookmarkComponent } from './bookmark/bookmark.component';
+import { BookmarksComponent } from './bookmarks/bookmarks.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,7 @@ import { BookmarkComponent } from './bookmark/bookmark.component';
     ErrorComponent,
     NotFoundComponent,
     ForbiddenComponent,
-    BookmarkComponent
+    BookmarksComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,12 +38,12 @@ import { BookmarkComponent } from './bookmark/bookmark.component';
     HttpClientModule,
     AngularMaterialModule,
     MangaModule,
-    AdminModule
+    AdminModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

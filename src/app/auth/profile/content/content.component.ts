@@ -4,7 +4,7 @@ import { ProfileComponent } from '../profile.component';
 @Component({
   selector: 'profile-content',
   templateUrl: './content.component.html',
-  styleUrls: ['./content.component.css']
+  styleUrls: ['./content.component.css'],
 })
 export class ContentComponent implements OnInit {
   private authUser!: User;
@@ -15,7 +15,7 @@ export class ContentComponent implements OnInit {
 
   constructor(
     @Inject(forwardRef(() => ProfileComponent))
-    private _parent: ProfileComponent
+    private _parent: ProfileComponent,
   ) {}
 
   ngOnInit(): void {

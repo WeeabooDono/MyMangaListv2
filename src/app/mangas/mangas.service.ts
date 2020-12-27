@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { Manga } from './manga.model';
 import { environment } from '../../environments/environment';
-import { Bookmark } from '../bookmark/bookmark.model';
+import { Bookmark } from '../bookmarks/bookmark.model';
 
 const BACKEND_URL = `${environment.apiUrl}/mangas`;
 @Injectable({ providedIn: 'root' })
@@ -28,13 +28,13 @@ export class MangasService {
     const queryParams = `?page=${page}&pagesize=${pagesize}`;
     this.http
       .get<{ message: string; mangas: any; count: number }>(
-        `${BACKEND_URL}/${queryParams}`
+        `${BACKEND_URL}/${queryParams}`,
       )
       .subscribe((data) => {
         this.mangas = data.mangas;
         this.mangasUpdated.next({
           mangas: [...this.mangas],
-          mangaCount: data.count
+          mangaCount: data.count,
         });
       });
     return [...this.mangas];
@@ -42,7 +42,7 @@ export class MangasService {
 
   getManga(id: number): Observable<{ manga: Manga; message: string }> {
     return this.http.get<{ manga: Manga; message: string }>(
-      `${BACKEND_URL}/${id}`
+      `${BACKEND_URL}/${id}`,
     );
   }
 
@@ -71,12 +71,13 @@ export class MangasService {
       mangaData.append('author', manga.author);
       mangaData.append('description', manga.description);
       mangaData.append('image', manga.image, manga.title);
+      mangaData.append('genres', manga.genres.toString());
     } else mangaData = manga;
 
     this.http
       .patch<{ message: string; manga: Manga }>(
         `${BACKEND_URL}/${manga.id}`,
-        mangaData
+        mangaData,
       )
       .subscribe((response) => {
         this.router.navigate(['/']);
@@ -84,19 +85,19 @@ export class MangasService {
   }
 
   bookmarkManga(
-    id: number
+    id: number,
   ): Observable<{ bookmark: Bookmark; message: string }> {
     return this.http.post<{ bookmark: Bookmark; message: string }>(
       `${BACKEND_URL}/bookmark`,
-      { id }
+      { id },
     );
   }
 
   unbookmarkManga(
-    id: number
+    id: number,
   ): Observable<{ bookmark: Bookmark; message: string }> {
     return this.http.delete<{ bookmark: Bookmark; message: string }>(
-      `${BACKEND_URL}/bookmark/${id}`
+      `${BACKEND_URL}/bookmark/${id}`,
     );
   }
 }

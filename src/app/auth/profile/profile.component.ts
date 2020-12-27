@@ -3,14 +3,12 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/admin/users/user.model';
 import { UsersService } from 'src/app/admin/users/users.service';
-import { Bookmark } from 'src/app/bookmark/bookmark.model';
-import { BookmarksService } from 'src/app/bookmark/bookmarks.service';
 import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   isLoading = false;
@@ -26,7 +24,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private authService: AuthService,
     public usersService: UsersService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {

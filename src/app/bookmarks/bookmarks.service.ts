@@ -20,12 +20,12 @@ export class BookmarksService {
   getBookmarks(user_id: number): Bookmark[] {
     this.http
       .get<{ message: string; bookmarks: Bookmark[] }>(
-        `${BACKEND_URL}/user/${user_id}`
+        `${BACKEND_URL}/user/${user_id}`,
       )
       .subscribe((data) => {
         this.bookmarks = data.bookmarks;
         this.bookmarksUpdated.next({
-          bookmarks: [...this.bookmarks]
+          bookmarks: [...this.bookmarks],
         });
       });
     return [...this.bookmarks];

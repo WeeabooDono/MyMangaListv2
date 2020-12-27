@@ -10,7 +10,7 @@ import { mimeType } from './mime-type.validator';
 @Component({
   selector: 'app-manga-create',
   templateUrl: './manga-create.component.html',
-  styleUrls: ['./manga-create.component.css']
+  styleUrls: ['./manga-create.component.css'],
 })
 export class MangaCreateComponent implements OnInit, OnDestroy {
   isLoading = false;
@@ -22,24 +22,24 @@ export class MangaCreateComponent implements OnInit, OnDestroy {
 
   constructor(
     public mangasService: MangasService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
       title: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(3)]
+        validators: [Validators.required, Validators.minLength(3)],
       }),
       author: new FormControl(null, {
-        validators: [Validators.required]
+        validators: [Validators.required],
       }),
       description: new FormControl(null, {
-        validators: [Validators.required]
+        validators: [Validators.required],
       }),
       image: new FormControl(null, {
         validators: [Validators.required],
-        asyncValidators: [mimeType]
-      })
+        asyncValidators: [mimeType],
+      }),
     });
     this.authStatusSub = this.authService
       .getAuthStatusListener()
@@ -57,7 +57,8 @@ export class MangaCreateComponent implements OnInit, OnDestroy {
       title: this.form.value.title,
       description: this.form.value.description,
       author: this.form.value.author,
-      image: this.form.value.image
+      image: this.form.value.image,
+      genres: [],
     };
 
     this.mangasService.addManga(manga);

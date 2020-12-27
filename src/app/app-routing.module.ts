@@ -7,40 +7,40 @@ import { MangaEditComponent } from './mangas/manga-edit/manga-edit.component';
 import { MangaListComponent } from './mangas/manga-list/manga-list.component';
 import { NotFoundComponent } from './404/notfound.component';
 import { ForbiddenComponent } from './403/forbidden.component';
-import { BookmarkComponent } from './bookmark/bookmark.component';
+import { BookmarksComponent } from './bookmarks/bookmarks.component';
 
 const routes: Routes = [
   { path: '', component: MangaListComponent },
   {
     path: 'mangas/create',
     component: MangaCreateComponent,
-    canActivate: [AuthGuard, AdminGuard]
+    canActivate: [AuthGuard, AdminGuard],
   },
   {
     path: 'mangas/edit/:id',
     component: MangaEditComponent,
-    canActivate: [AuthGuard, AdminGuard]
+    canActivate: [AuthGuard, AdminGuard],
   },
   {
     path: 'admin',
     loadChildren: () =>
       import('./admin/admin.module').then((module) => module.AdminModule),
-    canActivate: [AuthGuard, AdminGuard]
+    canActivate: [AuthGuard, AdminGuard],
   },
   {
     path: 'auth',
     loadChildren: () =>
-      import('./auth/auth.module').then((module) => module.AuthModule)
+      import('./auth/auth.module').then((module) => module.AuthModule),
   },
-  { path: 'bookmark/:username', component: BookmarkComponent },
+  { path: 'bookmark/:username', component: BookmarksComponent },
   { path: '404', component: NotFoundComponent },
   { path: '403', component: ForbiddenComponent },
-  { path: '**', redirectTo: '/404' }
+  { path: '**', redirectTo: '/404' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: [AuthGuard, AdminGuard]
+  providers: [AuthGuard, AdminGuard],
 })
 export class AppRoutingModule {}

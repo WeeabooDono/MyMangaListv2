@@ -4,4 +4,5 @@ export interface Manga {
   description: string;
   author: string;
   image: File | string;
+  genres: string[];
 }
