@@ -9,8 +9,8 @@ import { Bookmark } from 'src/app/bookmarks/bookmark.model';
 import { BookmarksService } from 'src/app/bookmarks/bookmarks.service';
 import { ConfirmationDialog } from '../../admin/mangas/confirmation-dialog.component';
 
-import { Manga } from '../manga.model';
-import { MangasService } from '../mangas.service';
+import { Manga } from '../../admin/mangas/manga.model';
+import { MangasService } from '../../admin/mangas/mangas.service';
 
 @Component({
   selector: 'app-manga-list',

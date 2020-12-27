@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { Manga } from './manga.model';
-import { environment } from '../../environments/environment';
-import { Bookmark } from '../bookmarks/bookmark.model';
+import { environment } from '../../../environments/environment';
+import { Bookmark } from '../../bookmarks/bookmark.model';
 
 const BACKEND_URL = `${environment.apiUrl}/mangas`;
 @Injectable({ providedIn: 'root' })
@@ -68,7 +68,7 @@ export class MangasService {
     this.http
       .post<{ message: string; manga: Manga }>(`${BACKEND_URL}/`, mangaData)
       .subscribe((response) => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/admin/mangas']);
       });
   }
 
@@ -93,7 +93,7 @@ export class MangasService {
         mangaData,
       )
       .subscribe((response) => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/admin/mangas']);
       });
   }
 

@@ -16,7 +16,7 @@ import { ErrorComponent } from './error/error.component';
 import { AngularMaterialModule } from './angular-material.module';
 
 // Custom modules
-import { MangaModule } from './mangas/mangas.module';
+import { MangaModule } from './admin/mangas/mangas.module';
 import { NotFoundComponent } from './404/notfound.component';
 import { ForbiddenComponent } from './403/forbidden.component';
 import { AdminModule } from './admin/admin.module';

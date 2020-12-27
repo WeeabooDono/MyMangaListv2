@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from '../angular-material.module';
 import { AdminComponent } from './admin.component';
 import { AdminRoutingModule } from './admin-routing.module';
-import { MangasComponent } from './mangas/mangas.component';
 import { UserListComponent } from './users/user-list/user-list.component';
 import { UserEditComponent } from './users/user-edit/user-edit.component';
 import { UserShowComponent } from './users/user-show/user-show.component';
@@ -17,7 +16,6 @@ import { MangaEditComponent } from './mangas/manga-edit/manga-edit.component';
 @NgModule({
   declarations: [
     AdminComponent,
-    MangasComponent,
     UserListComponent,
     UserEditComponent,
     UserShowComponent,

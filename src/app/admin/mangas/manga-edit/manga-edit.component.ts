@@ -7,8 +7,8 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { Genre } from 'src/app/genres/genre.model';
 import { GenresService } from 'src/app/genres/genres.service';
 
-import { Manga } from '../../../mangas/manga.model';
-import { MangasService } from '../../../mangas/mangas.service';
+import { Manga } from '../manga.model';
+import { MangasService } from '../mangas.service';
 import { mimeType } from './mime-type.validator';
 
 @Component({

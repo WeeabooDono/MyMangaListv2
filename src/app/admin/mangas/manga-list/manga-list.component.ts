@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { ConfirmationDialog } from 'src/app/admin/mangas/confirmation-dialog.component';
-import { Manga } from 'src/app/mangas/manga.model';
-import { MangasService } from 'src/app/mangas/mangas.service';
+import { Manga } from 'src/app/admin/mangas/manga.model';
+import { MangasService } from 'src/app/admin/mangas/mangas.service';
 
 @Component({
   selector: 'app-manga-list',
