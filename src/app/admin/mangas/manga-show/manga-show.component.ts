@@ -14,6 +14,7 @@ export class MangaShowComponent implements OnInit {
   manga!: Manga;
   id!: number;
   stars: string[] = [];
+  vote_msg = '';
 
   constructor(
     public mangasService: MangasService,
@@ -37,6 +38,8 @@ export class MangaShowComponent implements OnInit {
 
   generateStars(): void {
     const roundedScore = Math.round(this.manga.score);
+    if (this.manga.votes > 1) this.vote_msg = 'votes';
+    else this.vote_msg = 'vote';
 
     for (let score = 0; score < 10; score += 2) {
       const rest = roundedScore - score;
