@@ -1,1 +1,69 @@
-<p>manga-show works!</p>
+<!-- Image display -->
+<div class="manga-detail-info-cover">
+    <img
+        class="manga-detail-info-cover-img"
+        [src]="manga.image"
+        [alt]="manga.title"
+    />
+</div>
+
+<mat-card class="layered">
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <mat-grid-list cols="6">
+        <mat-grid-tile colspan="5">
+            <div class="manga-detail-info-left">
+                <!-- Title display -->
+                <div class="manga-detail-info-title">
+                    {{ manga.title }}
+                </div>
+
+                <!-- Title display -->
+                <div class="manga-detail-info-author">
+                    Author:
+                    <a
+                        [routerLink]="['/admin/mangas/show', manga.id]"
+                        [title]="manga.author"
+                        style="color: #666; text-decoration: none"
+                    >
+                        {{ manga.author }}
+                    </a>
+                </div>
+
+                <!-- Genres display -->
+                <div class="manga-detail-info-genres">
+                    <mat-chip-list
+                        class="genre-chip"
+                        cdkDropList
+                        cdkDropListOrientation="horizontal"
+                    >
+                        <mat-chip
+                            class="genre-box"
+                            cdkDrag
+                            *ngFor="let genre of manga.genres"
+                        >
+                            {{ genre }}
+                        </mat-chip>
+                    </mat-chip-list>
+                </div>
+
+                <!-- Description -->
+                <div class="manga-detail-info-description">
+                    {{ manga.description }}
+                </div>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="1">
+            <div class="manga-detail-info-right">
+                <!-- Score with stars -->
+                <div class="manga-detail-info-right-stars">
+                    <mat-icon class="tab-icon" *ngFor="let star of stars">{{
+                        star
+                    }}</mat-icon>
+                </div>
+                <div class="manga-detail-info-right-score">
+                    {{ score }} / 10
+                </div>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</mat-card>

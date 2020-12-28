@@ -9,7 +9,7 @@
   }
   
   .mat-column-Image {
-    width: 5%;
+    width: 7%;
   }
   
   .button-container {
@@ -18,4 +18,12 @@
   
   .button-container button {
     width: auto;
+  }
+
+  li {
+    list-style: none;
+  }
+
+  .mat-cell {
+    padding-right: 1em;
   }

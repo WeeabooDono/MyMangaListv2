@@ -1,0 +1,42 @@
+mat-card {
+    top: 3em;
+}
+
+.manga-detail-info-cover {
+    position: absolute;
+    left: 12%;
+    /* box-shadow: 10px 10px 5px -1px rgba(0, 0, 0, 0.75); */
+    overflow: hidden;
+    border-radius: 5px;
+    font-size: 0;
+    z-index: 1;
+}
+
+.manga-detail-info-left {
+    padding-left: 240px;
+    display: inline;
+}
+
+.manga-detail-info-left > * {
+    margin-top: 1em;
+}
+
+.manga-detail-info-title {
+    font-size: large;
+}
+
+.manga-detail-info-author {
+    font-size: large;
+}
+
+.genre-box.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.genre-chip .cdk-drop-list-dragging {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.manga-detail-info-right-score {
+    text-align: center;
+}

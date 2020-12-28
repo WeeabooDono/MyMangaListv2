@@ -43,9 +43,11 @@
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let manga">
             <mat-action-row>
-                <a mat-button color="accent" [routerLink]="['/admin/mangas/edit', manga.id]">EDIT</a><br>
-                <a mat-button color="accent" [routerLink]="['/admin/mangas/show', manga.id]">SHOW</a><br>
-                <button mat-button color="warn" (click)="onDelete(manga.id)">DELETE</button>
+                <ul>
+                    <li><a mat-button color="accent" [routerLink]="['/admin/mangas/edit', manga.id]">EDIT</a></li>
+                    <li><a mat-button color="accent" [routerLink]="['/admin/mangas/show', manga.id]">SHOW</a></li>
+                    <li><button mat-button color="warn" (click)="onDelete(manga.id)">DELETE</button></li>
+                </ul>
             </mat-action-row>
         </td>
     </ng-container>
