@@ -5,4 +5,6 @@ export interface Manga {
   author: string;
   image: File | string;
   genres: string[];
+  score: number;
+  votes: number;
 }

@@ -2,6 +2,14 @@ mat-card {
     top: 3em;
 }
 
+mat-grid-list {
+    height: 20em;
+}
+
+mat-grid-tile {
+    align-items: end;
+}
+
 .manga-detail-info-cover {
     position: absolute;
     left: 12%;
@@ -38,5 +46,9 @@ mat-card {
 }
 
 .manga-detail-info-right-score {
+    text-align: center;
+}
+
+.manga-detail-info-right-votes {
     text-align: center;
 }

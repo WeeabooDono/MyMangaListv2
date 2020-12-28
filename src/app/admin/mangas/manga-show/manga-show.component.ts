@@ -13,7 +13,6 @@ export class MangaShowComponent implements OnInit {
   isLoading = false;
   manga!: Manga;
   id!: number;
-  score = 6.79;
   stars: string[] = [];
 
   constructor(
@@ -22,8 +21,6 @@ export class MangaShowComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.generateStars();
-
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.isLoading = true;
       this.id = (paramMap.get('id') as unknown) as number;
@@ -32,12 +29,14 @@ export class MangaShowComponent implements OnInit {
         .subscribe((mangaData: { manga: Manga; message: string }) => {
           this.manga = mangaData.manga;
           this.isLoading = false;
+
+          this.generateStars();
         });
     });
   }
 
   generateStars(): void {
-    const roundedScore = Math.round(this.score);
+    const roundedScore = Math.round(this.manga.score);
 
     for (let score = 0; score < 10; score += 2) {
       const rest = roundedScore - score;

@@ -60,6 +60,8 @@ export class MangaCreateComponent implements OnInit, OnDestroy {
       author: this.form.value.author,
       image: this.form.value.image,
       genres: [],
+      score: 0,
+      votes: 0,
     };
 
     this.mangasService.addManga(manga);
