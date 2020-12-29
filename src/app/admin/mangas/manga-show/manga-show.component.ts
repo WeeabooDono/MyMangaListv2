@@ -1,37 +1,83 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Manga } from '../manga.model';
 import { MangasService } from '../mangas.service';
+import { AuthService } from 'src/app/auth/auth.service';
+import { BookmarksService } from 'src/app/bookmarks/bookmarks.service';
+import { Bookmark } from 'src/app/bookmarks/bookmark.model';
+import { Subscription } from 'rxjs';
+import { User } from '../../users/user.model';
 
 @Component({
   selector: 'app-manga-show',
   templateUrl: './manga-show.component.html',
   styleUrls: ['./manga-show.component.css'],
 })
-export class MangaShowComponent implements OnInit {
+export class MangaShowComponent implements OnInit, OnDestroy {
   isLoading = false;
+
   manga!: Manga;
-  id!: number;
+  private mangasSub: Subscription = new Subscription();
+
+  private id!: number;
   stars: string[] = [];
   vote_msg = '';
 
+  authenticated = false;
+  authUser!: User;
+  bookmarked = false;
+
+  bookmark!: Bookmark;
+
   constructor(
     public mangasService: MangasService,
+    public bookmarkService: BookmarksService,
+    private authService: AuthService,
     public route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
+    this.authenticated = this.authService.getIsAuth();
+    this.authUser = this.authService.getAuthUser();
+
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.isLoading = true;
       this.id = (paramMap.get('id') as unknown) as number;
+
+      // manga service
       this.mangasService
         .getManga(this.id)
         .subscribe((mangaData: { manga: Manga; message: string }) => {
           this.manga = mangaData.manga;
           this.isLoading = false;
-
           this.generateStars();
+        });
+
+      // not working, but why ?
+      this.mangasSub = this.mangasService.getMangasUpdateListener().subscribe(
+        () => {
+          console.log('toto');
+          this.mangasService
+            .getManga(this.id)
+            .subscribe((mangaData: { manga: Manga; message: string }) => {
+              this.manga = mangaData.manga;
+              this.isLoading = false;
+
+              this.generateStars();
+            });
+        },
+        (err) => console.log('HTTP Error', err),
+      );
+
+      // bookmark service
+      this.bookmarkService
+        .getBookmark(this.authUser.id, this.id)
+        .subscribe((bookmarkData: { bookmark: Bookmark }) => {
+          if (bookmarkData.bookmark) {
+            this.bookmark = bookmarkData.bookmark;
+            this.bookmarked = true;
+          } else this.bookmarked = false;
         });
     });
   }
@@ -47,5 +93,41 @@ export class MangaShowComponent implements OnInit {
       else if (rest > 0 && rest <= 2) this.stars.push('star_half');
       else this.stars.push('star_outline');
     }
+  }
+
+  onBookmark(): void {
+    this.mangasService.bookmarkManga(this.id).subscribe(
+      () => {
+        this.mangasService.getManga(this.id);
+        this.bookmarkService
+          .getBookmark(this.authUser.id, this.id)
+          .subscribe((bookmarkData: { bookmark: Bookmark }) => {
+            this.bookmark = bookmarkData.bookmark;
+          });
+      },
+      () => {
+        this.isLoading = false;
+      },
+    );
+  }
+
+  onUnbookmark(): void {
+    this.mangasService.unbookmarkManga(this.id).subscribe(
+      () => {
+        this.mangasService.getManga(this.id);
+        this.bookmarkService
+          .getBookmark(this.authUser.id, this.id)
+          .subscribe((bookmarkData: { bookmark: Bookmark }) => {
+            this.bookmark = bookmarkData.bookmark;
+          });
+      },
+      () => {
+        this.isLoading = false;
+      },
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.mangasSub.unsubscribe();
   }
 }

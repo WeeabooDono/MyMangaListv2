@@ -30,4 +30,14 @@ export class BookmarksService {
       });
     return [...this.bookmarks];
   }
+
+  getBookmark(
+    user_id: number,
+    manga_id: number,
+  ): Observable<{ bookmark: Bookmark }> {
+    console.log('test');
+    return this.http.get<{ message: string; bookmark: Bookmark }>(
+      `${BACKEND_URL}/${user_id}/${manga_id}`,
+    );
+  }
 }

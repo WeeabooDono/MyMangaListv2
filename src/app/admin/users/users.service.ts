@@ -61,8 +61,6 @@ export class UsersService {
       console.log(userData);
     } else userData = user;
 
-    console.log('FE ==> upload');
-    console.log(user);
     return this.http.patch<{ user: User; message: string }>(
       `${BACKEND_URL}/${user.id}`,
       userData,
