@@ -8,6 +8,8 @@ import { BookmarksService } from 'src/app/bookmarks/bookmarks.service';
 import { Bookmark } from 'src/app/bookmarks/bookmark.model';
 import { Subscription } from 'rxjs';
 import { User } from '../../users/user.model';
+import { ConfirmationDialog } from '../confirmation-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-manga-show',
@@ -33,6 +35,7 @@ export class MangaShowComponent implements OnInit {
     public mangasService: MangasService,
     public bookmarkService: BookmarksService,
     private authService: AuthService,
+    private dialog: MatDialog,
     public route: ActivatedRoute,
   ) {}
 
@@ -82,6 +85,7 @@ export class MangaShowComponent implements OnInit {
   }
 
   onBookmark(): void {
+    this.isLoading = true;
     this.mangasService.bookmarkManga(this.id).subscribe(
       () => {
         this.mangasService.getManga(this.id);
@@ -89,6 +93,7 @@ export class MangaShowComponent implements OnInit {
           .getBookmark(this.authUser.id, this.id)
           .subscribe((bookmarkData: { bookmark: Bookmark }) => {
             this.bookmark = bookmarkData.bookmark;
+            this.isLoading = false;
           });
       },
       () => {
@@ -98,24 +103,39 @@ export class MangaShowComponent implements OnInit {
   }
 
   onUnbookmark(): void {
-    this.mangasService.unbookmarkManga(this.id).subscribe(
-      () => {
-        this.mangasService
-          .getManga(this.id)
-          .subscribe((mangaData: { manga: Manga; message: string }) => {
-            this.manga = mangaData.manga;
+    const dialogRef = this.dialog.open(ConfirmationDialog, {
+      data: {
+        message: 'Are you sure you want to unbookmark this manga ?',
+        buttonText: {
+          ok: 'Unbookmark',
+          cancel: 'No',
+        },
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.isLoading = true;
+        this.mangasService.unbookmarkManga(this.id).subscribe(
+          () => {
+            this.mangasService
+              .getManga(this.id)
+              .subscribe((mangaData: { manga: Manga; message: string }) => {
+                this.manga = mangaData.manga;
+                this.isLoading = false;
+                this.generateStars();
+              });
+            this.bookmarkService
+              .getBookmark(this.authUser.id, this.id)
+              .subscribe((bookmarkData: { bookmark: Bookmark }) => {
+                this.bookmark = bookmarkData.bookmark;
+              });
+          },
+          () => {
             this.isLoading = false;
-            this.generateStars();
-          });
-        this.bookmarkService
-          .getBookmark(this.authUser.id, this.id)
-          .subscribe((bookmarkData: { bookmark: Bookmark }) => {
-            this.bookmark = bookmarkData.bookmark;
-          });
-      },
-      () => {
-        this.isLoading = false;
-      },
-    );
+          },
+        );
+      }
+    });
   }
 }
