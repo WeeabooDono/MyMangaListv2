@@ -46,6 +46,14 @@ mat-grid-tile {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
+.manga-detail-info-right {
+    height: 100%;
+}
+
+.manga-detail-info-right > * {
+    margin-top: 1em;
+}
+
 .manga-detail-info-right-score {
     text-align: center;
 }

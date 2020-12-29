@@ -53,7 +53,7 @@
                 </div>
             </div>
         </mat-grid-tile>
-        <mat-grid-tile colspan="1" rowspan="1">
+        <mat-grid-tile colspan="1" rowspan="2">
             <div class="manga-detail-info-right" *ngIf="manga.votes !== 0">
                 <!-- Score with stars -->
                 <div class="manga-detail-info-right-stars">
@@ -67,23 +67,29 @@
                 <div class="manga-detail-info-right-votes">
                     {{ manga.votes }} {{ vote_msg }}
                 </div>
+                <div class="manga-bookmark" *ngIf="authenticated && !bookmark">
+                    <button mat-button color="accent" (click)="onBookmark()">
+                        BOOKMARK
+                    </button>
+                </div>
+                <div class="manga-bookmark" *ngIf="authenticated && bookmark">
+                    <button mat-button color="warn" (click)="onUnbookmark()">
+                        UNBOOKMARK
+                    </button>
+                </div>
             </div>
             <div class="manga-detail-info-right" *ngIf="manga.votes === 0">
                 <div class="manga-detail-info-right-votes">No votes yet !</div>
-            </div>
-        </mat-grid-tile>
-
-        <mat-grid-tile colspan="1" rowspan="1">
-            <!-- Bookmark -->
-            <div class="manga-bookmark" *ngIf="authenticated && !bookmark">
-                <button mat-button color="accent" (click)="onBookmark()">
-                    BOOKMARK
-                </button>
-            </div>
-            <div class="manga-bookmark" *ngIf="authenticated && bookmark">
-                <button mat-button color="warn" (click)="onUnbookmark()">
-                    UNBOOKMARK
-                </button>
+                <div class="manga-bookmark" *ngIf="authenticated && !bookmark">
+                    <button mat-button color="accent" (click)="onBookmark()">
+                        BOOKMARK
+                    </button>
+                </div>
+                <div class="manga-bookmark" *ngIf="authenticated && bookmark">
+                    <button mat-button color="warn" (click)="onUnbookmark()">
+                        UNBOOKMARK
+                    </button>
+                </div>
             </div>
         </mat-grid-tile>
     </mat-grid-list>
