@@ -65,6 +65,8 @@ export class MangasService {
     mangaData.append('author', manga.author);
     mangaData.append('description', manga.description);
     mangaData.append('image', manga.image, manga.title);
+    mangaData.append('genres', manga.genres!.toString());
+
     this.http
       .post<{ message: string; manga: Manga }>(`${BACKEND_URL}/`, mangaData)
       .subscribe((response) => {

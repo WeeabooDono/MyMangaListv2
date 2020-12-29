@@ -1,7 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { Genre } from 'src/app/genres/genre.model';
+import { GenresService } from 'src/app/genres/genres.service';
 
 import { Manga } from '../manga.model';
 import { MangasService } from '../mangas.service';
@@ -20,9 +23,13 @@ export class MangaCreateComponent implements OnInit, OnDestroy {
 
   private authStatusSub!: Subscription;
 
+  genres: Genre[] = [];
+  private genresSub: Subscription = new Subscription();
+
   constructor(
     public mangasService: MangasService,
     private authService: AuthService,
+    public genresService: GenresService,
   ) {}
 
   ngOnInit(): void {
@@ -47,6 +54,13 @@ export class MangaCreateComponent implements OnInit, OnDestroy {
       .subscribe((authStatus) => {
         this.isLoading = false;
       });
+
+    this.genres = this.genresService.getGenres();
+    this.genresService
+      .getGenreUpdateListener()
+      .subscribe((genresData: { genres: Genre[] }) => {
+        this.genres = genresData.genres;
+      });
   }
 
   onAddManga(): void {
@@ -59,6 +73,7 @@ export class MangaCreateComponent implements OnInit, OnDestroy {
       description: this.form.value.description,
       author: this.form.value.author,
       image: this.form.value.image,
+      genres: this.form.value.genres,
     };
 
     this.mangasService.addManga(manga);
@@ -80,7 +95,25 @@ export class MangaCreateComponent implements OnInit, OnDestroy {
     reader.readAsDataURL(file);
   }
 
+  onCheckboxChange(event: MatCheckboxChange): void {
+    const genres: FormArray = this.form.get('genres') as FormArray;
+
+    if (event.checked) {
+      genres.push(new FormControl(event.source.value));
+    } else {
+      let i = 0;
+      genres.controls.forEach((item) => {
+        if (item.value == event.source.value) {
+          genres.removeAt(i);
+          return;
+        }
+        i++;
+      });
+    }
+  }
+
   ngOnDestroy(): void {
     this.authStatusSub.unsubscribe();
+    this.genresSub.unsubscribe();
   }
 }
