@@ -68,7 +68,7 @@ export class MangaEditComponent implements OnInit {
             genres: [],
           });
           const genres: FormArray = this.form.get('genres') as FormArray;
-          this.manga.genres.forEach((genre) => {
+          this.manga.genres!.forEach((genre) => {
             genres.push(new FormControl(genre));
           });
         });
@@ -100,8 +100,6 @@ export class MangaEditComponent implements OnInit {
       author: this.form.value.author,
       image: this.form.value.image,
       genres: this.form.value.genres,
-      votes: 0,
-      score: 0,
     };
     this.mangasService.updateManga(manga);
     this.form.reset();

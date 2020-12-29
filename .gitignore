@@ -46,3 +46,4 @@ testem.log
 Thumbs.db
 
 tslint-to-eslint-config.log
+vapid-keys.json

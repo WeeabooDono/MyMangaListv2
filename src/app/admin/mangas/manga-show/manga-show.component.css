@@ -48,16 +48,21 @@ mat-grid-tile {
 
 .manga-detail-info-right {
     height: 100%;
+    text-align: center;
 }
 
 .manga-detail-info-right > * {
     margin-top: 1em;
 }
 
-.manga-detail-info-right-score {
-    text-align: center;
+.manga-detail-info-right > * > span {
+    font-weight: 900;
 }
 
-.manga-detail-info-right-votes {
-    text-align: center;
+.manga-detail-info-right-rank {
+    font-size: large;
+}
+
+.manga-detail-info-right-popularity {
+    font-size: large;
 }

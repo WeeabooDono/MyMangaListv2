@@ -1,34 +1,79 @@
 <p>
+    <link rel="shortcut icon" href="#" />
     <mat-toolbar>
-     <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span><a routerLink="/">MyMangaList</a></span>
-    <ul *ngIf="authenticated && isAdmin">
-      <li><a mat-button routerLink="/admin/dashboard" routerLinkActive="mat-warn">Dashboard</a></li>
-    </ul>
-    <button mat-button [matMenuTriggerFor]="administrate" *ngIf="authenticated && isAdmin">Administrate</button>
-    <mat-menu #administrate="matMenu">
-      <button mat-menu-item routerLink="/admin/users">Users</button>
-      <button mat-menu-item routerLink="/admin/mangas">Mangas</button>
-    </mat-menu>
-    <span class="example-spacer"></span>
-    <ul>
-      <li *ngIf="!authenticated"><a mat-button routerLink="/auth/login" routerLinkActive="mat-warn">Login</a></li>
-      <li *ngIf="!authenticated"><a mat-button routerLink="/auth/register" routerLinkActive="mat-warn">Register</a></li>
-    </ul>
+        <button
+            mat-icon-button
+            class="example-icon"
+            aria-label="Example icon-button with menu icon"
+        >
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span><a routerLink="/">MyMangaList</a></span>
+        <ul *ngIf="authenticated && isAdmin">
+            <li>
+                <a
+                    mat-button
+                    routerLink="/admin/dashboard"
+                    routerLinkActive="mat-warn"
+                    >Dashboard</a
+                >
+            </li>
+        </ul>
+        <button
+            mat-button
+            [matMenuTriggerFor]="administrate"
+            *ngIf="authenticated && isAdmin"
+        >
+            Administrate
+        </button>
+        <mat-menu #administrate="matMenu">
+            <button mat-menu-item routerLink="/admin/users">Users</button>
+            <button mat-menu-item routerLink="/admin/mangas">Mangas</button>
+        </mat-menu>
+        <span class="example-spacer"></span>
+        <ul>
+            <li *ngIf="!authenticated">
+                <a
+                    mat-button
+                    routerLink="/auth/login"
+                    routerLinkActive="mat-warn"
+                    >Login</a
+                >
+            </li>
+            <li *ngIf="!authenticated">
+                <a
+                    mat-button
+                    routerLink="/auth/register"
+                    routerLinkActive="mat-warn"
+                    >Register</a
+                >
+            </li>
+        </ul>
 
-    <!-- Authenticated part -->
-    <button mat-button [matMenuTriggerFor]="menu" *ngIf="authenticated">
-      <!-- <img [src]="authUser.image" alt="profile_picture" class="profile-image"> -->
-      {{ authUser.username }}
-    </button>
-    <!-- ngIf="authenticated" doesn't work on mat-menu -->
-    <mat-menu #menu="matMenu">
-      <button *ngIf="authenticated" mat-menu-item [routerLink]="['/auth/profile/', authUser.username]">Profile</button>
-      <button *ngIf="authenticated" mat-menu-item [routerLink]="['/bookmark/', authUser.username]">My manga list</button>
-      <button *ngIf="authenticated" mat-menu-item (click)="onLogout()">Logout</button>
-    </mat-menu>
-
-  </mat-toolbar>
-  </p>
+        <!-- Authenticated part -->
+        <button mat-button [matMenuTriggerFor]="menu" *ngIf="authenticated">
+            <!-- <img [src]="authUser.image" alt="profile_picture" class="profile-image"> -->
+            {{ authUser.username }}
+        </button>
+        <!-- ngIf="authenticated" doesn't work on mat-menu -->
+        <mat-menu #menu="matMenu">
+            <button
+                *ngIf="authenticated"
+                mat-menu-item
+                [routerLink]="['/auth/profile/', authUser.username]"
+            >
+                Profile
+            </button>
+            <button
+                *ngIf="authenticated"
+                mat-menu-item
+                [routerLink]="['/bookmark/', authUser.username]"
+            >
+                My manga list
+            </button>
+            <button *ngIf="authenticated" mat-menu-item (click)="onLogout()">
+                Logout
+            </button>
+        </mat-menu>
+    </mat-toolbar>
+</p>

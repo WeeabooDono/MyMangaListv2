@@ -21,6 +21,8 @@ import { NotFoundComponent } from './404/notfound.component';
 import { ForbiddenComponent } from './403/forbidden.component';
 import { AdminModule } from './admin/admin.module';
 import { BookmarksComponent } from './bookmarks/bookmarks.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,9 @@ import { BookmarksComponent } from './bookmarks/bookmarks.component';
     AngularMaterialModule,
     MangaModule,
     AdminModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+    }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

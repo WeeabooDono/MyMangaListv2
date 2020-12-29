@@ -54,32 +54,62 @@
             </div>
         </mat-grid-tile>
         <mat-grid-tile colspan="1" rowspan="2">
-            <div class="manga-detail-info-right" *ngIf="manga.votes !== 0">
+            <div class="manga-detail-info-right">
+                <!-- Rank -->
+                <div
+                    class="manga-detail-info-right-rank"
+                    *ngIf="manga.votes !== 0"
+                >
+                    Ranked <span>#{{ manga.rank }}</span>
+                </div>
+
+                <!-- Popularity -->
+                <div
+                    class="manga-detail-info-right-popularity"
+                    *ngIf="manga.votes !== 0"
+                >
+                    Popularity <span>#{{ manga.popularity }}</span>
+                </div>
+
+                <!-- Number of readers -->
+                <div class="manga-detail-info-right-readers">
+                    {{ manga.readers }} {{ readers_msg }}
+                </div>
+
                 <!-- Score with stars -->
-                <div class="manga-detail-info-right-stars">
+                <div
+                    class="manga-detail-info-right-stars"
+                    *ngIf="manga.votes !== 0"
+                >
                     <mat-icon class="tab-icon" *ngFor="let star of stars">{{
                         star
                     }}</mat-icon>
                 </div>
-                <div class="manga-detail-info-right-score">
+
+                <!-- Score /10 -->
+                <div
+                    class="manga-detail-info-right-score"
+                    *ngIf="manga.votes !== 0"
+                >
                     {{ manga.score }} / 10
                 </div>
-                <div class="manga-detail-info-right-votes">
+
+                <!-- Number of votes -->
+                <div
+                    class="manga-detail-info-right-votes"
+                    *ngIf="manga.votes !== 0"
+                >
                     {{ manga.votes }} {{ vote_msg }}
                 </div>
-                <div class="manga-bookmark" *ngIf="authenticated && !bookmark">
-                    <button mat-button color="accent" (click)="onBookmark()">
-                        BOOKMARK
-                    </button>
+
+                <div
+                    class="manga-detail-info-right-votes"
+                    *ngIf="manga.votes === 0"
+                >
+                    No votes yet !
                 </div>
-                <div class="manga-bookmark" *ngIf="authenticated && bookmark">
-                    <button mat-button color="warn" (click)="onUnbookmark()">
-                        UNBOOKMARK
-                    </button>
-                </div>
-            </div>
-            <div class="manga-detail-info-right" *ngIf="manga.votes === 0">
-                <div class="manga-detail-info-right-votes">No votes yet !</div>
+
+                <!-- Bookmark Buttons -->
                 <div class="manga-bookmark" *ngIf="authenticated && !bookmark">
                     <button mat-button color="accent" (click)="onBookmark()">
                         BOOKMARK

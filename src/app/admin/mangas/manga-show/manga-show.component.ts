@@ -24,6 +24,7 @@ export class MangaShowComponent implements OnInit {
   private id!: number;
   stars: string[] = [];
   vote_msg = '';
+  readers_msg = '';
 
   authenticated = false;
   authUser!: User;
@@ -53,6 +54,11 @@ export class MangaShowComponent implements OnInit {
         .subscribe((mangaData: { manga: Manga; message: string }) => {
           this.manga = mangaData.manga;
           this.isLoading = false;
+
+          if (this.manga.readers! > 1) {
+            this.readers_msg = 'readers are reading this !';
+          } else this.readers_msg = 'reader is reading this.';
+
           this.generateStars();
         });
 
@@ -69,8 +75,8 @@ export class MangaShowComponent implements OnInit {
   }
 
   generateStars(): void {
-    const roundedScore = Math.round(this.manga.score);
-    if (this.manga.votes > 1) this.vote_msg = 'votes';
+    const roundedScore = Math.round(this.manga.score!);
+    if (this.manga.votes! > 1) this.vote_msg = 'votes';
     else this.vote_msg = 'vote';
 
     // we reset the array anyway
@@ -88,7 +94,13 @@ export class MangaShowComponent implements OnInit {
     this.isLoading = true;
     this.mangasService.bookmarkManga(this.id).subscribe(
       () => {
-        this.mangasService.getManga(this.id);
+        this.mangasService
+          .getManga(this.id)
+          .subscribe((mangaData: { manga: Manga; message: string }) => {
+            this.manga = mangaData.manga;
+            this.isLoading = false;
+            this.generateStars();
+          });
         this.bookmarkService
           .getBookmark(this.authUser.id, this.id)
           .subscribe((bookmarkData: { bookmark: Bookmark }) => {

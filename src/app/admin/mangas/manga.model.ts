@@ -4,7 +4,11 @@ export interface Manga {
   description: string;
   author: string;
   image: File | string;
-  genres: string[];
-  score: number;
-  votes: number;
+  // Optionnal parameters since we only get them from a view and not a table
+  genres?: string[];
+  votes?: number;
+  score?: number;
+  rank?: number;
+  readers?: number;
+  popularity?: number;
 }

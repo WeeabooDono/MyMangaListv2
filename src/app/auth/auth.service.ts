@@ -45,7 +45,7 @@ export class AuthService {
     this.http
       .post<{ message: string; user: unknown }>(
         `${BACKEND_URL}/signup`,
-        authData
+        authData,
       )
       .subscribe(
         (response) => {
@@ -53,7 +53,7 @@ export class AuthService {
         },
         (error) => {
           this.authStatusListener.next(false);
-        }
+        },
       );
   }
 
@@ -91,7 +91,7 @@ export class AuthService {
         },
         (error) => {
           this.authStatusListener.next(false);
-        }
+        },
       );
   }
 
