@@ -54,7 +54,7 @@
             </div>
         </mat-grid-tile>
         <mat-grid-tile colspan="1">
-            <div class="manga-detail-info-right" *ngIf="manga.votes != 0">
+            <div class="manga-detail-info-right" *ngIf="manga.votes !== 0">
                 <!-- Score with stars -->
                 <div class="manga-detail-info-right-stars">
                     <mat-icon class="tab-icon" *ngFor="let star of stars">{{
@@ -68,7 +68,7 @@
                     {{ manga.votes }} {{ vote_msg }}
                 </div>
             </div>
-            <div class="manga-detail-info-right" *ngIf="manga.votes == 0">
+            <div class="manga-detail-info-right" *ngIf="manga.votes === 0">
                 <div class="manga-detail-info-right-votes">No votes yet !</div>
             </div>
         </mat-grid-tile>

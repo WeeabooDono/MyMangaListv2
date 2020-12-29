@@ -10,10 +10,10 @@ mat-grid-tile {
     align-items: end;
 }
 
-.manga-detail-info-cover {
+.manga-detail-info-cover img {
     position: absolute;
     left: 12%;
-    /* box-shadow: 10px 10px 5px -1px rgba(0, 0, 0, 0.75); */
+    box-shadow: 10px 10px 5px -1px rgba(0, 0, 0, 0.75);
     overflow: hidden;
     border-radius: 5px;
     font-size: 0;
