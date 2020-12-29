@@ -14,11 +14,10 @@ import { User } from '../../users/user.model';
   templateUrl: './manga-show.component.html',
   styleUrls: ['./manga-show.component.css'],
 })
-export class MangaShowComponent implements OnInit, OnDestroy {
+export class MangaShowComponent implements OnInit {
   isLoading = false;
 
   manga!: Manga;
-  private mangasSub: Subscription = new Subscription();
 
   private id!: number;
   stars: string[] = [];
@@ -54,22 +53,6 @@ export class MangaShowComponent implements OnInit, OnDestroy {
           this.generateStars();
         });
 
-      // not working, but why ?
-      this.mangasSub = this.mangasService.getMangasUpdateListener().subscribe(
-        () => {
-          console.log('toto');
-          this.mangasService
-            .getManga(this.id)
-            .subscribe((mangaData: { manga: Manga; message: string }) => {
-              this.manga = mangaData.manga;
-              this.isLoading = false;
-
-              this.generateStars();
-            });
-        },
-        (err) => console.log('HTTP Error', err),
-      );
-
       // bookmark service
       this.bookmarkService
         .getBookmark(this.authUser.id, this.id)
@@ -86,6 +69,9 @@ export class MangaShowComponent implements OnInit, OnDestroy {
     const roundedScore = Math.round(this.manga.score);
     if (this.manga.votes > 1) this.vote_msg = 'votes';
     else this.vote_msg = 'vote';
+
+    // we reset the array anyway
+    this.stars = [];
 
     for (let score = 0; score < 10; score += 2) {
       const rest = roundedScore - score;
@@ -114,7 +100,13 @@ export class MangaShowComponent implements OnInit, OnDestroy {
   onUnbookmark(): void {
     this.mangasService.unbookmarkManga(this.id).subscribe(
       () => {
-        this.mangasService.getManga(this.id);
+        this.mangasService
+          .getManga(this.id)
+          .subscribe((mangaData: { manga: Manga; message: string }) => {
+            this.manga = mangaData.manga;
+            this.isLoading = false;
+            this.generateStars();
+          });
         this.bookmarkService
           .getBookmark(this.authUser.id, this.id)
           .subscribe((bookmarkData: { bookmark: Bookmark }) => {
@@ -125,9 +117,5 @@ export class MangaShowComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       },
     );
-  }
-
-  ngOnDestroy(): void {
-    this.mangasSub.unsubscribe();
   }
 }
