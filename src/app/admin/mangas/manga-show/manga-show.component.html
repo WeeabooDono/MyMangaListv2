@@ -1,12 +1,42 @@
 <!-- Image display -->
-<div class="manga-detail-info-cover">
+<div class="manga-detail-info-cover" *ngIf="manga">
     <img
-        *ngIf="manga"
         class="manga-detail-info-cover-img"
         [src]="manga.image"
         [alt]="manga.title"
     />
 </div>
+
+<mat-card
+    class="manga-detail-info-bookmark"
+    *ngIf="bookmark"
+    matBadge="1"
+    matBadgeSize="large"
+    matBadgeColor="warn"
+>
+    <mat-list>
+        <div mat-subheader>Bookmark</div>
+
+        <!-- Score  -->
+        <div mat-line>
+            <mat-icon mat-list-icon>star_border</mat-icon>
+            {{ bookmark.score || '-' }} /10
+        </div>
+
+        <!-- Chapters -->
+        <div mat-line>
+            <mat-icon mat-list-icon>menu_book</mat-icon>
+            {{ bookmark.chapters_read }} /
+            {{ bookmark.chapters || '-' }} chapters
+        </div>
+
+        <!-- Volumes -->
+        <div mat-line>
+            <mat-icon mat-list-icon>menu_book</mat-icon>
+            {{ bookmark.volumes_read }} / {{ bookmark.volumes || '-' }} volumes
+        </div>
+    </mat-list>
+</mat-card>
 
 <mat-card class="layered" *ngIf="manga">
     <mat-spinner *ngIf="isLoading"></mat-spinner>
@@ -16,6 +46,12 @@
                 <!-- Title display -->
                 <div class="manga-detail-info-title">
                     {{ manga.title }}
+                    <a
+                        class="manga-detail-info-status"
+                        [routerLink]="['/admin/mangas/show', manga.id]"
+                    >
+                        {{ manga.status }}
+                    </a>
                 </div>
 
                 <!-- Title display -->
@@ -24,7 +60,6 @@
                     <a
                         [routerLink]="['/admin/mangas/show', manga.id]"
                         [title]="manga.author"
-                        style="color: #666; text-decoration: none"
                     >
                         {{ manga.author }}
                     </a>

@@ -30,7 +30,8 @@
             ],
             "scripts": [
               "./src/app/404/notfound.js",
-              "./src/app/403/forbidden.js"
+              "./src/app/403/forbidden.js",
+              "src/custom.js"
             ]
           },
           "configurations": {

@@ -10,6 +10,15 @@ mat-grid-tile {
     align-items: end;
 }
 
+.mat-line {
+    text-align: center;
+}
+
+.manga-detail-info-bookmark {
+    width: 170px;
+    background-color: rgb(100, 100, 100);
+}
+
 .manga-detail-info-cover img {
     position: absolute;
     left: 12%;
@@ -18,6 +27,13 @@ mat-grid-tile {
     border-radius: 5px;
     font-size: 0;
     z-index: 1;
+}
+
+.manga-detail-info-bookmark {
+    position: absolute;
+    left: 12%;
+    z-index: 1;
+    top: 380px;
 }
 
 .manga-detail-info-left {
@@ -36,6 +52,11 @@ mat-grid-tile {
 
 .manga-detail-info-author {
     font-size: large;
+}
+
+.manga-detail-info-author a {
+    color: #666;
+    text-decoration: none;
 }
 
 .genre-box.cdk-drag-animating {
@@ -65,4 +86,9 @@ mat-grid-tile {
 
 .manga-detail-info-right-popularity {
     font-size: large;
+}
+
+.manga-detail-info-status {
+    color: rgb(255, 255, 102);
+    text-decoration: none;
 }

@@ -1,5 +1,97 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-<mat-accordion multi="true" *ngIf="mangas.length > 0 && !isLoading">
+
+<div class="manga-list-container" *ngIf="mangas.length > 0 && !isLoading">
+    <mat-card class="manga-card" *ngFor="let manga of mangas">
+        <div class="manga-content">
+            <!-- Image -->
+            <a
+                class="manga-image-link"
+                [routerLink]="['/admin/mangas/show', manga.id]"
+            >
+                <img mat-card-image [src]="manga.image" [alt]="manga.title" />
+            </a>
+
+            <!-- Bookmark -->
+            <button
+                *ngIf="authenticated && !isBookmarked(manga)"
+                class="bookmark"
+                mat-mini-fab
+                color="accent"
+                aria-label="Bookmark icon"
+                (click)="onBookmark(manga.id)"
+            >
+                <mat-icon>playlist_add</mat-icon>
+            </button>
+
+            <!-- Rank -->
+            <span *ngIf="manga.rank" class="manga-rank" color="warn">
+                <mat-chip>#{{ manga.rank }}</mat-chip>
+            </span>
+
+            <mat-card-content>
+                <div class="manga-title">
+                    <a
+                        class="manga-title-link read-more-read-less"
+                        [id]="'a' + manga.id"
+                        [routerLink]="['/admin/mangas/show', manga.id]"
+                    >
+                        <span *ngIf="manga.title.length < 50">{{
+                            manga.title
+                        }}</span>
+                        <span *ngIf="manga.title.length >= 50">
+                            {{ manga.title | slice: 0:50 }}
+                            <span class="dots" [id]="'dots' + manga.id"
+                                >...</span
+                            >
+                            <span class="more" [id]="'more' + manga.id">
+                                {{ manga.title | slice: 51 }}
+                            </span>
+                        </span>
+                    </a>
+                    <a
+                        *ngIf="manga.title.length >= 50"
+                        style="text-decoration: none; color: rgb(23, 140, 243)"
+                        (click)="readMoreReadLess(manga.id)"
+                        class="read-more-read-less-button"
+                        [id]="'button' + manga.id"
+                    >
+                        more
+                    </a>
+                </div>
+
+                <div class="manga-bottom-content">
+                    <!-- Score with stars -->
+                    <div class="manga-stars" *ngIf="manga.votes !== 0">
+                        <mat-icon
+                            class="tab-icon"
+                            *ngFor="let star of getStars(manga.score!)"
+                        >
+                            {{ star }}
+                        </mat-icon>
+                    </div>
+
+                    <div class="manga-genres">
+                        <mat-chip-list
+                            class="genre-chip"
+                            cdkDropList
+                            cdkDropListOrientation="horizontal"
+                        >
+                            <mat-chip
+                                class="genre-box"
+                                cdkDrag
+                                *ngFor="let genre of manga.genres | slice: 0:3"
+                            >
+                                {{ genre }}
+                            </mat-chip>
+                        </mat-chip-list>
+                    </div>
+                </div>
+            </mat-card-content>
+        </div>
+    </mat-card>
+</div>
+
+<!-- <mat-accordion multi="true" *ngIf="mangas.length > 0 && !isLoading">
     <mat-expansion-panel *ngFor="let manga of mangas" [expanded]="true">
         <mat-expansion-panel-header>
             <mat-panel-title>
@@ -10,24 +102,40 @@
             </mat-panel-description>
         </mat-expansion-panel-header>
         <div class="manga-image">
-            <img [src]="manga.image" [alt]="manga.title">
+            <a [routerLink]="['/admin/mangas/show', manga.id]">
+                <img [src]="manga.image" [alt]="manga.title" />
+            </a>
         </div>
         <div class="manga-description">
             {{ manga.description }} {{ manga.id }}
         </div>
-        <div class="manga-bookmark" *ngIf="authenticated && !isBookmarked(manga)">
-            <button mat-button color="accent" (click)="onBookmark(manga.id)">BOOKMARK</button>
+        <div
+            class="manga-bookmark"
+            *ngIf="authenticated && !isBookmarked(manga)"
+        >
+            <button mat-button color="accent" (click)="onBookmark(manga.id)">
+                BOOKMARK
+            </button>
         </div>
-        <div class="manga-bookmark" *ngIf="authenticated && isBookmarked(manga)">
-            <button mat-button color="warn" (click)="onUnbookmark(manga.id)">UNBOOKMARK</button>
+        <div
+            class="manga-bookmark"
+            *ngIf="authenticated && isBookmarked(manga)"
+        >
+            <button mat-button color="warn" (click)="onUnbookmark(manga.id)">
+                UNBOOKMARK
+            </button>
         </div>
     </mat-expansion-panel>
-</mat-accordion>
-<mat-paginator  *ngIf="mangas.length > 0"
-                fixed
-                [length]="length"
-                [pageSize]="pageSize"
-                [pageSizeOptions]="pageSizeOptions"
-                (page)="onChangedPage($event)">
+</mat-accordion> -->
+<mat-paginator
+    *ngIf="mangas.length > 0"
+    fixed
+    [length]="length"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="onChangedPage($event)"
+>
 </mat-paginator>
-<p class="info-text mat-body-1" *ngIf="mangas.length === 0  && !isLoading">No mangas added yet</p>
+<p class="info-text mat-body-1" *ngIf="mangas.length === 0 && !isLoading">
+    No mangas added yet
+</p>

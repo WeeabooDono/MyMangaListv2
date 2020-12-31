@@ -33,8 +33,8 @@ export class MangaListComponent implements OnInit, OnDestroy {
 
   // pagination attributes
   length = 0;
-  pageSize = 2;
-  pageSizeOptions = [1, 2, 5, 10];
+  pageSize = 12;
+  pageSizeOptions = [4, 8, 12, 16];
   currentPage = 1;
 
   constructor(
@@ -98,17 +98,34 @@ export class MangaListComponent implements OnInit, OnDestroy {
   }
 
   onBookmark(id: number): void {
-    this.mangasService.bookmarkManga(id).subscribe(
-      () => {
-        this.mangasService.getMangas(this.currentPage, this.pageSize);
-        if (this.authenticated) {
-          this.bookmarks = this.bookmarkService.getBookmarks(this.authUser.id);
-        }
+    const dialogRef = this.dialog.open(ConfirmationDialog, {
+      data: {
+        message: 'Are you sure you want to bookmark this manga ?',
+        buttonText: {
+          ok: 'Bookmark',
+          cancel: 'No',
+        },
       },
-      () => {
-        this.isLoading = false;
-      },
-    );
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.isLoading = true;
+        this.mangasService.bookmarkManga(id).subscribe(
+          () => {
+            this.mangasService.getMangas(this.currentPage, this.pageSize);
+            if (this.authenticated) {
+              this.bookmarks = this.bookmarkService.getBookmarks(
+                this.authUser.id,
+              );
+            }
+          },
+          () => {
+            this.isLoading = false;
+          },
+        );
+      }
+    });
   }
 
   onUnbookmark(id: number): void {
@@ -125,11 +142,43 @@ export class MangaListComponent implements OnInit, OnDestroy {
     );
   }
 
+  getStars(score: number): string[] {
+    const roundedScore = Math.round(score);
+
+    // we reset the array anyway
+    const stars = [];
+
+    for (let score = 0; score < 10; score += 2) {
+      const rest = roundedScore - score;
+      if (rest >= 2) stars.push('star');
+      else if (rest > 0 && rest <= 2) stars.push('star_half');
+      else stars.push('star_outline');
+    }
+
+    return stars;
+  }
+
   isBookmarked(manga: Manga): boolean {
     let bookmarked = false;
     this.bookmarks.forEach((bookmark) => {
       if (bookmark.manga_id === manga.id) bookmarked = true;
     });
     return bookmarked;
+  }
+
+  readMoreReadLess(manga_id: number): void {
+    const dots = document.getElementById('dots' + manga_id);
+    const more = document.getElementById('more' + manga_id);
+    const button = document.getElementById('button' + manga_id);
+    const a = document.getElementById('a' + manga_id);
+    if (dots!.style.display === 'none') {
+      dots!.style.display = 'inline';
+      button!.innerHTML = 'more';
+      more!.style.display = 'none';
+    } else {
+      dots!.style.display = 'none';
+      button!.innerHTML = 'less';
+      more!.style.display = 'inline';
+    }
   }
 }

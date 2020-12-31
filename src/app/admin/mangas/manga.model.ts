@@ -11,4 +11,5 @@ export interface Manga {
   rank?: number;
   readers?: number;
   popularity?: number;
+  status?: string;
 }

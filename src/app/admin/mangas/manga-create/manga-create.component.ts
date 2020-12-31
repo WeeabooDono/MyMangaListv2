@@ -78,6 +78,7 @@ export class MangaCreateComponent implements OnInit, OnDestroy {
 
     this.mangasService.addManga(manga);
     this.form.reset();
+    this.isLoading = false;
   }
 
   onImagePicked(event: Event): void {
