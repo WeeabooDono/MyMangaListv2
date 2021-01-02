@@ -8,27 +8,27 @@ import { ForbiddenComponent } from './403/forbidden.component';
 import { BookmarksComponent } from './bookmarks/bookmarks.component';
 
 const routes: Routes = [
-  { path: '', component: MangaListComponent },
-  {
-    path: 'admin',
-    loadChildren: () =>
-      import('./admin/admin.module').then((module) => module.AdminModule),
-    canActivate: [AuthGuard, AdminGuard],
-  },
-  {
-    path: 'auth',
-    loadChildren: () =>
-      import('./auth/auth.module').then((module) => module.AuthModule),
-  },
-  { path: 'bookmark/:username', component: BookmarksComponent },
-  { path: '404', component: NotFoundComponent },
-  { path: '403', component: ForbiddenComponent },
-  { path: '**', redirectTo: '/404' },
+    { path: '', component: MangaListComponent },
+    {
+        path: 'admin',
+        loadChildren: () =>
+            import('./admin/admin.module').then((module) => module.AdminModule),
+        canActivate: [AuthGuard, AdminGuard],
+    },
+    {
+        path: 'auth',
+        loadChildren: () =>
+            import('./auth/auth.module').then((module) => module.AuthModule),
+    },
+    { path: 'bookmark/:username', component: BookmarksComponent },
+    { path: '404', component: NotFoundComponent },
+    { path: '403', component: ForbiddenComponent },
+    { path: '**', redirectTo: '/404' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-  providers: [AuthGuard, AdminGuard],
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule],
+    providers: [AuthGuard, AdminGuard],
 })
 export class AppRoutingModule {}

@@ -1,29 +1,29 @@
 .manga-image {
     width: 90%;
-  }
-  
-  .manga-image img {
+}
+
+.manga-image img {
     margin: 8px;
     width: 100%;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-  }
-  
-  .mat-column-Image {
+}
+
+.mat-column-Image {
     width: 7%;
-  }
-  
-  .button-container {
+}
+
+.button-container {
     display: flex;
-  }
-  
-  .button-container button {
+}
+
+.button-container button {
     width: auto;
-  }
+}
 
-  li {
+li {
     list-style: none;
-  }
+}
 
-  .mat-cell {
+.mat-cell {
     padding-right: 1em;
-  }
+}

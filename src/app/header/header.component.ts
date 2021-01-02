@@ -4,38 +4,38 @@ import { User } from '../admin/users/user.model';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  isAdmin = false;
-  authUser!: User;
+    isAdmin = false;
+    authUser!: User;
 
-  authenticated = false;
-  private authListenerSub!: Subscription;
+    authenticated = false;
+    private authListenerSub!: Subscription;
 
-  constructor(private authService: AuthService) {}
+    constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {
-    this.authenticated = this.authService.getIsAuth();
-    this.isAdmin = this.authService.getIsAdmin();
-    this.authUser = this.authService.getAuthUser();
-
-    this.authListenerSub = this.authService
-      .getAuthStatusListener()
-      .subscribe((isAuthenticated) => {
-        this.authenticated = isAuthenticated;
-        this.authUser = this.authService.getAuthUser();
+    ngOnInit(): void {
+        this.authenticated = this.authService.getIsAuth();
         this.isAdmin = this.authService.getIsAdmin();
-      });
-  }
+        this.authUser = this.authService.getAuthUser();
 
-  ngOnDestroy(): void {
-    this.authListenerSub.unsubscribe();
-  }
+        this.authListenerSub = this.authService
+            .getAuthStatusListener()
+            .subscribe((isAuthenticated) => {
+                this.authenticated = isAuthenticated;
+                this.authUser = this.authService.getAuthUser();
+                this.isAdmin = this.authService.getIsAdmin();
+            });
+    }
 
-  onLogout(): void {
-    this.authService.logout();
-  }
+    ngOnDestroy(): void {
+        this.authListenerSub.unsubscribe();
+    }
+
+    onLogout(): void {
+        this.authService.logout();
+    }
 }
