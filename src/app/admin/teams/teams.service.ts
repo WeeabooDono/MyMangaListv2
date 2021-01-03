@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
+import { stringify } from '@angular/compiler/src/util';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Member } from './member.model';
 import { Team } from './team.model';
 
 const BACKEND_URL = `${environment.apiUrl}/teams`;
@@ -45,5 +47,19 @@ export class TeamsService {
             .subscribe((response) => {
                 this.router.navigate(['/admin/teams']);
             });
+    }
+
+    getTeam(id: number): Observable<{ team: Team; message: string }> {
+        return this.http.get<{ message: string; team: Team }>(
+            `${BACKEND_URL}/${id}`,
+        );
+    }
+
+    getTeamMembers(
+        id: number,
+    ): Observable<{ members: Member[]; message: string }> {
+        return this.http.get<{ message: string; members: Member[] }>(
+            `${BACKEND_URL}/${id}/members`,
+        );
     }
 }

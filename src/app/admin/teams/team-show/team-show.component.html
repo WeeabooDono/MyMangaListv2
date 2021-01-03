@@ -1,1 +1,9 @@
-<p>team-show works!</p>
+<div class="container" *ngIf="team">
+    {{ team.name }}
+
+    <ul *ngIf="members">
+        <li *ngFor="let member of members">
+            {{ member.username }} - {{ member.role }}
+        </li>
+    </ul>
+</div>
